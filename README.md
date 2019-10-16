@@ -4,6 +4,29 @@ This is the README for your extension "abbreviation-js". After writing up a brie
 
 ## Features
 
+```
+rqr:package --> const package = require('package');
+rqr:customName:package --> const customName = require('package');
+rqr:objA,objB:package --> const { objA, objB } = require('package');
+
+imp:package --> import package from 'package';
+imp::package --> import { * cursor is here * } from 'package';
+imp:objA,objB:package --> import { objA, objB } from 'package';
+imp*customName:package --> import * as customName from 'package';
+
+l:name --> let name = * cursor is here *
+l:name:value --> let name = value;
+c:name --> const name = * cursor is here *
+c:name:value --> let name = value;
+f>param1,param2 --> function (param1, param2) { * cursor is here * }
+f:name>param1,param2 --> function name(param1, param2) { * cursor is here * }
+
+exc:name --> export const name =
+exd:name --> export default name;
+
+mexp:name --> module exports = name;
+```
+
 Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
 
 For example if there is an image subfolder under your extension project workspace:
