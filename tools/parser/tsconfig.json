@@ -1,5 +1,13 @@
 {
-  "extends": "../../tsconfig",
-  "files": ["src/index.ts"],
-  "include": ["src/**/*.ts"]
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "outDir": "lib"
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib"
+  ]
 }
