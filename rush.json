@@ -1,0 +1,28 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
+  "rushVersion": "5.15.1",
+  "npmVersion": "4.5.0",
+  "nodeSupportedVersionRange": ">=10.13.0 <11.0.0",
+  "ensureConsistentVersions": true,
+  "repository": {
+    "url": "https://github.com/loonskai/abbreviation.js"
+  },
+  "eventHooks": {
+    "preRushInstall": [],
+    "postRushInstall": [],
+    "preRushBuild": [],
+    "postRushBuild": []
+  },
+  "variants": [],
+  "projects": [
+    {
+      "packageName": "vscode",
+      "projectFolder": "apps/vscode"
+    },
+    {
+      "packageName": "parser",
+      "projectFolder": "tools/parser",
+      "reviewCategory": "tools"
+    }
+  ]
+}
