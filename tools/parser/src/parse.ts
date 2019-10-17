@@ -1,27 +1,104 @@
-import { split } from './helpers';
-import startingNodes from './startingNodes';
+import identifiers from './constants/identifiers';
+import { split } from './utils/helpers';
+import * as out from './utils/out';
+import { parseNamedImport, parseAliasImport } from './utils/parseNodes';
 
-import * as parseStatement from './parseStatement';
+const _require = (nodes: string[]): string => {
+  switch (nodes.length) {
+    case 1: {
+      const [packageName] = nodes;
+      return out._require(packageName, packageName);
+    }
+    case 2: {
+      const [vars, packageName] = nodes;
+      if (vars.indexOf(',') !== -1) {
+        return out._require(parseNamedImport(vars), packageName);
+      }
+      return out._require(vars, packageName);
+    }
+    default:
+      return '';
+  }
+};
+
+const _import = (nodes: string[]): string => {
+  switch (nodes.length) {
+    case 1: {
+      const [packageName] = nodes;
+      return out._import(packageName, packageName);
+    }
+    case 2: {
+      const [vars, packageName] = nodes;
+      if (vars === '') return out._import(`{ }`, packageName);
+
+      if (vars.indexOf(',') !== -1)
+        return out._import(parseNamedImport(vars), packageName);
+
+      if (vars.indexOf('*') !== -1)
+        return out._import(parseAliasImport(vars), packageName);
+    }
+    default:
+      return '';
+  }
+};
+
+const _let = (nodes: string[]): string => {
+  const [packageName, value] = nodes;
+  return out._let(packageName, value);
+};
+
+const _const = (nodes: string[]): string => {
+  const [packageName, value] = nodes;
+  return out._const(packageName, value);
+};
+
+const _function = (nodes: string[]): string => {
+  const [name, params] = nodes;
+  name;
+  params;
+  switch (nodes.length) {
+    case 1:
+    case 2:
+      return out._funcExpression(name, params);
+    default:
+      return '';
+  }
+};
+
+const _namedExport = (nodes: string[]): string => {
+  const [name] = nodes;
+  return out._namedExport(name);
+};
+
+const _defaultExport = (nodes: string[]): string => {
+  const [name] = nodes;
+  return out._defaultExport(name);
+};
+
+const _moduleExports = (nodes: string[]): string => {
+  const [name] = nodes;
+  return out._moduleExports(name);
+};
 
 const parse = (str: string): string => {
   const [startingNode, ...nodes] = split(str);
   switch (startingNode) {
-    case startingNodes.RQR:
-      return parseStatement._require(nodes);
-    case startingNodes.IMP:
-      return parseStatement._import(nodes);
-    case startingNodes.L:
-      return parseStatement._let(nodes);
-    case startingNodes.C:
-      return parseStatement._const(nodes);
-    case startingNodes.F:
-      return parseStatement._function(nodes);
-    case startingNodes.EX:
-      return parseStatement._namedExport(nodes);
-    case startingNodes.EXD:
-      return parseStatement._defaultExport(nodes);
-    case startingNodes.MEXP:
-      return parseStatement._moduleExports(nodes);
+    case identifiers.RQR:
+      return _require(nodes);
+    case identifiers.IMP:
+      return _import(nodes);
+    case identifiers.L:
+      return _let(nodes);
+    case identifiers.C:
+      return _const(nodes);
+    case identifiers.F:
+      return _function(nodes);
+    case identifiers.EX:
+      return _namedExport(nodes);
+    case identifiers.EXD:
+      return _defaultExport(nodes);
+    case identifiers.MEXP:
+      return _moduleExports(nodes);
     default:
       return str;
   }
