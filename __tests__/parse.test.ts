@@ -70,4 +70,23 @@ describe('parse', () => {
       expect(parse('mexp:name')).toEqual('module.exports = name;');
     });
   });
+
+  describe('arrow functions', () => {
+    it('run basic cases successfully', () => {
+      expect(parse('=>')).toEqual('() => ');
+      expect(parse('param=>')).toEqual('param => ');
+      expect(parse('a,b=>')).toEqual('(a, b) => ');
+      expect(parse('name::=>')).toEqual('const name = () => ');
+      expect(parse('name:a=>')).toEqual('const name = a => ');
+      expect(parse('name:a,b,c=>')).toEqual('const name = (a, b, c) => ');
+      expect(parse('=>a')).toEqual('async () => ');
+      expect(parse('param=>a')).toEqual('async param => ');
+      expect(parse('a,b,c=>a')).toEqual('async (a, b, c) =>');
+      expect(parse('name::=>a')).toEqual('const name = async () => ');
+      expect(parse('name:param=>a')).toEqual('const name = async param => ');
+      expect(parse('name:a,b,c=>a')).toEqual(
+        'const name = async (a, b, c) => '
+      );
+    });
+  });
 });
