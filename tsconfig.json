@@ -1,14 +1,17 @@
 {
-  "$schema": "http://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "outDir": "lib",
-    "declaration": true
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "./lib",
+    "strict": true,
+    "lib": ["es6"]
   },
   "include": [
-    "**/*.ts"
+    "src"
   ],
   "exclude": [
     "node_modules",
-    "lib"
+    "**/__tests__/*"
   ]
 }
