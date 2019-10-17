@@ -1,34 +1,27 @@
 import { split } from './helpers';
+import startingNodes from './startingNodes';
 
-const getStringRequire = (vars, value) =>
-  `const ${vars} = require('${value}');`;
-
-const parseNamedImport = value => {
-  const vars = value.split(',');
-  return `{ ${vars.join(', ')} }`;
-};
-
-const parseRequireStatement = (nodes: string[]): string => {
-  const { length } = nodes;
-  if (length === 1) {
-    const [packageName] = nodes;
-    return getStringRequire(packageName, packageName);
-  }
-  if (length === 2) {
-    const [vars, packageName] = nodes;
-    if (vars.indexOf(',') === -1) {
-      return getStringRequire(vars, packageName);
-    } else {
-      return getStringRequire(parseNamedImport(vars), packageName);
-    }
-  }
-};
+import * as parseStatement from './parseStatement';
 
 const parse = (str: string): string => {
   const [startingNode, ...nodes] = split(str);
   switch (startingNode) {
-    case 'rqr':
-      return parseRequireStatement(nodes);
+    case startingNodes.RQR:
+      return parseStatement._require(nodes);
+    case startingNodes.IMP:
+      return parseStatement._import(nodes);
+    case startingNodes.L:
+      return parseStatement._let(nodes);
+    case startingNodes.C:
+      return parseStatement._const(nodes);
+    case startingNodes.F:
+      return parseStatement._function(nodes);
+    case startingNodes.EX:
+      return parseStatement._namedExport(nodes);
+    case startingNodes.EXD:
+      return parseStatement._defaultExport(nodes);
+    case startingNodes.MEXP:
+      return parseStatement._moduleExports(nodes);
     default:
       return str;
   }

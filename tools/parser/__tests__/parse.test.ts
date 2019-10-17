@@ -18,22 +18,25 @@ describe('parse', () => {
   describe('import statement', () => {
     it('run basic cases successfully', () => {
       expect(parse('imp:package')).toEqual(`import package from 'package';`);
-      expect(parse('imp::package')).toEqual(
-        `import { * cursor is here * } from 'package';`,
-      );
+      expect(parse('imp::package')).toEqual(`import { } from 'package';`);
       expect(parse('imp:objA,objB:package')).toEqual(
         `import { objA, objB } from 'package';`,
       );
-      expect(parse('imp*customName:package')).toEqual(
+      expect(parse('imp:*customName:package')).toEqual(
         `import * as customName from 'package';`,
       );
     });
   });
 
-  describe('variable declarations', () => {
+  describe('let variable declarations', () => {
     it('run basic cases successfully', () => {
       expect(parse('l:name')).toEqual(`let name = `);
       expect(parse('l:name:value')).toEqual(`let name = value;`);
+    });
+  });
+
+  describe('const variable declarations', () => {
+    it('run basic cases successfully', () => {
       expect(parse('c:name')).toEqual(`const name = `);
       expect(parse('c:name:value')).toEqual(`const name = value;`);
     });
@@ -41,11 +44,13 @@ describe('parse', () => {
 
   describe('function expression', () => {
     it('run basic cases successfully', () => {
-      expect(parse('f>param1,param2')).toEqual('function (param1, param2) { }');
-      expect(parse('f>param1,param2')).toEqual('function (param1, param2) { }');
-      expect(parse('f:name>param1,param2')).toEqual(
+      expect(parse('f::param1,param2')).toEqual(
+        'function (param1, param2) { }',
+      );
+      expect(parse('f:name:param1,param2')).toEqual(
         'function name(param1, param2) { }',
       );
+      expect(parse('f:name:')).toEqual('function name() { }');
     });
   });
 
@@ -58,7 +63,8 @@ describe('parse', () => {
 
   describe('module.exports', () => {
     it('run basic cases successfully', () => {
-      expect(parse('mexp:name')).toEqual('module exports = name;');
+      expect(parse('mexp:')).toEqual('module.exports = ');
+      expect(parse('mexp:name')).toEqual('module.exports = name;');
     });
   });
 });
