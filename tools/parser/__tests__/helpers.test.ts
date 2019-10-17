@@ -1,4 +1,4 @@
-import { split } from '../src/helpers';
+import { split } from '../src/utils/helpers';
 
 describe('split helper', () => {
   it('works as expected', () => {
