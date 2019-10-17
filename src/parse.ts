@@ -36,6 +36,8 @@ const _import = (nodes: string[]): string => {
 
       if (vars.indexOf('*') !== -1)
         return out._import(parseAliasImport(vars), packageName);
+
+      return out._import(vars, packageName);
     }
     default:
       return '';

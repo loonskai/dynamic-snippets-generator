@@ -1,5 +1,3 @@
-import parse from './parse';
+import parseFunc from './parse';
 
-export default {
-  parse
-};
+export const parse = parseFunc;
