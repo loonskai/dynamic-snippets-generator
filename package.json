@@ -1,6 +1,6 @@
 {
-  "name": "abbreviation.js",
-  "version": "1.0.0-rc.1",
+  "name": "abbreviation-js",
+  "version": "1.0.0",
   "description": "Abbreviation.js core library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@my.github.com:loonskai/abbreviation.js.git"
+    "url": "git@github.com:loonskai/abbreviation-js.git"
   },
   "author": "Siarhei Lunski <loonskai@gmail.com>",
   "license": "MIT",
