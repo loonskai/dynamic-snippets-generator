@@ -1,7 +1,10 @@
 import identifiers from './constants/identifiers';
-import { split } from './utils/helpers';
 import * as out from './utils/out';
-import { parseNamedImport, parseAliasImport } from './utils/parseNodes';
+import {
+  parseNamedImport,
+  parseAliasImport,
+  parseArrowFunction,
+} from './utils/parseNodes';
 
 const _require = (nodes: string[]): string => {
   switch (nodes.length) {
@@ -82,8 +85,20 @@ const _moduleExports = (nodes: string[]): string => {
   return out._moduleExports(name);
 };
 
+const _arrowFunction = (str: string): string => {
+  const [nodes, isAsync] = str.split('=>');
+  let parsedNodes = parseArrowFunction(nodes);
+  if (isAsync) {
+    const arrowFuncExpressionIdx =
+      parsedNodes.findIndex(str => str === '=>') - 1;
+    parsedNodes.splice(arrowFuncExpressionIdx, 0, 'async');
+  }
+  return `${parsedNodes.join(' ')} `;
+};
+
 const parse = (str: string): string => {
-  const [startingNode, ...nodes] = split(str);
+  if (str.indexOf('=>') !== -1) return _arrowFunction(str);
+  const [startingNode, ...nodes] = str.split(':');
   switch (startingNode) {
     case identifiers.RQR:
       return _require(nodes);

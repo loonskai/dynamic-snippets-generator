@@ -1,2 +1,2 @@
-# abbreviation-js
-abbreviation-js core library for VSCode JavaScript extension
+# AbbreviationJS
+AbbreviationJS core library for VSCode JavaScript extension

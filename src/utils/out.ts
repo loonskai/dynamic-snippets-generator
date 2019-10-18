@@ -13,7 +13,7 @@ export const _const = (vars: string, value?: string): string =>
   `const ${vars} = ${value ? value + ';' : ''}`;
 
 export const _funcExpression = (name: string, params: string): string =>
-  `function ${name}(${parseFunctionParams(params)}) { }`;
+  `function ${name}${parseFunctionParams(params)} { }`;
 
 export const _namedExport = (name: string): string => `export const ${name} = `;
 

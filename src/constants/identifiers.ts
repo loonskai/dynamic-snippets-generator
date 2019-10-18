@@ -7,4 +7,5 @@ export default {
   EX: 'ex',
   EXD: 'exd',
   MEXP: 'mexp',
+  ASYNC: 'a',
 };
