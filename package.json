@@ -1,7 +1,7 @@
 {
   "name": "abbreviation-js",
-  "version": "1.0.0-rc.0",
-  "description": "Abbreviation.js core library",
+  "version": "1.0.0-rc.1",
+  "description": "AbbreviationJS core library",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "devDependencies": {
