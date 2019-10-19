@@ -1,4 +1,4 @@
-import * as ast from './utils/generateAST';
+import * as ast from './ast';
 import sliceNodes from './utils/sliceNodes';
 import identifiers from './constants/identifiers';
 
