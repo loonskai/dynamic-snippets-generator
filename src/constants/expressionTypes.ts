@@ -1,7 +1,9 @@
 export default {
-  VARIABLE_DECLARATION: 'VariableDeclaration',
-  VARIABLE_DECLARATOR: 'VariableDeclarator',
-  IDENTIFIER: 'Identifier',
   CALL_EXPRESSION: 'CallExpression',
-  LITERAL: 'Literal'
+  IDENTIFIER: 'Identifier',
+  LITERAL: 'Literal',
+  OBJECT_PATTERN: 'ObjectPattern',
+  PROPERTY: 'Property',
+  VARIABLE_DECLARATION: 'VariableDeclaration',
+  VARIABLE_DECLARATOR: 'VariableDeclarator'
 };

@@ -1,16 +1,12 @@
 import * as escodegen from 'escodegen';
 import types from '../constants/expressionTypes';
+import { parseObjectDestructuringProps, parseASTProperty } from './utils';
 
 interface Tree {
   type: string;
   kind: string;
   declarations: any;
 }
-
-const parseObjectDestructuring = (str?: string): string[] => {
-  if (!str) return [];
-  return str.indexOf(',') ? str.split(',') : [str];
-};
 
 const _require = (str: string): string => {
   let name;
@@ -27,11 +23,24 @@ const _require = (str: string): string => {
       case ':': {
         const nodes = str.split(':');
         name = nodes.pop();
-        desctructuredProps = parseObjectDestructuring(nodes.pop());
-        desctructuredProps;
+        desctructuredProps = parseObjectDestructuringProps(nodes.pop());
+        break;
       }
     }
   }
+
+  const declaratorID = desctructuredProps
+    ? {
+        type: types.OBJECT_PATTERN,
+        properties: desctructuredProps.map(parseASTProperty)
+      }
+    : {
+        type: types.VARIABLE_DECLARATOR,
+        id: {
+          type: types.IDENTIFIER,
+          name: customName || name
+        }
+      };
 
   const tree: Tree = {
     type: types.VARIABLE_DECLARATION,
@@ -40,8 +49,7 @@ const _require = (str: string): string => {
       {
         type: types.VARIABLE_DECLARATOR,
         id: {
-          type: types.IDENTIFIER,
-          name: `${customName || name}`
+          ...declaratorID
         },
         init: {
           type: types.CALL_EXPRESSION,
@@ -52,7 +60,7 @@ const _require = (str: string): string => {
           arguments: [
             {
               type: types.LITERAL,
-              value: `${name}`
+              value: name
             }
           ]
         }

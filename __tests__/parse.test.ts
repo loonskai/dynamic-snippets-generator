@@ -20,19 +20,19 @@ describe('parse', () => {
 
     it('rqr:obj:package', () => {
       expect(parse('rqr:obj:package')).toEqual(
-        "const { obj } = require('package');"
+        "const {obj} = require('package');"
       );
     });
 
     it('rqr:objA,objB:package', () => {
       expect(parse('rqr:objA,objB:package')).toEqual(
-        "const { objA, objB } = require('package');"
+        "const {objA, objB} = require('package');"
       );
     });
 
     it('rqr:objA,objB,objC:package', () => {
       expect(parse('rqr:objA,objB,objC:package')).toEqual(
-        "const { objA, objB, objC } = require('package');"
+        "const {objA, objB, objC} = require('package');"
       );
     });
   });
