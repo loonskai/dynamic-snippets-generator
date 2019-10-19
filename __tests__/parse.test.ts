@@ -2,7 +2,7 @@ import parse from '../src/parse';
 
 describe('parse', () => {
   describe('require statement', () => {
-    it('rqr>package', () => {
+    /*     it('rqr>package', () => {
       expect(parse('rqr>package')).toEqual(
         "const ${2:package} = require('${1:package}');"
       );
@@ -13,27 +13,27 @@ describe('parse', () => {
         "const ${2:customName} = require('${1:package}');"
       );
     });
-
-    it('rqr:>package', () => {
-      expect(parse('rqr:>package')).toEqual(
+ */
+    it('rqr::package', () => {
+      expect(parse('rqr::package')).toEqual(
         "const { $2 } = require('${1:package}');"
       );
     });
 
-    it('rqr:obj>package', () => {
-      expect(parse('rqr:obj>package')).toEqual(
+    it('rqr:obj:package', () => {
+      expect(parse('rqr:obj:package')).toEqual(
         "const { ${2:obj} } = require('${1:package}');"
       );
     });
 
-    it('rqr:objA,objB>package', () => {
-      expect(parse('rqr:objA,objB>package')).toEqual(
+    it('rqr:objA,objB:package', () => {
+      expect(parse('rqr:objA,objB:package')).toEqual(
         "const { ${2:objA}, ${3:objB} } = require('${1:package}');"
       );
     });
 
-    it('rqr:objA,objB,objC>package', () => {
-      expect(parse('rqr:objA,objB,objC>package')).toEqual(
+    it('rqr:objA,objB,objC:package', () => {
+      expect(parse('rqr:objA,objB,objC:package')).toEqual(
         "const { ${2:objA}, ${3:objB}, ${4:objC} } = require('${1:package}');"
       );
     });
@@ -52,26 +52,26 @@ describe('parse', () => {
       );
     });
 
-    it('imp:>package', () => {
-      expect(parse('imp:>package')).toEqual(
+    it('imp::package', () => {
+      expect(parse('imp::package')).toEqual(
         "import { $2 } from '${1:package}';"
       );
     });
 
-    it('imp:obj>package', () => {
-      expect(parse('imp:obj>package')).toEqual(
+    it('imp:obj:package', () => {
+      expect(parse('imp:obj:package')).toEqual(
         "import { ${2:obj} } from '${1:package}';"
       );
     });
 
-    it('imp:objA,objB>package', () => {
-      expect(parse('imp:objA,objB>package')).toEqual(
+    it('imp:objA,objB:package', () => {
+      expect(parse('imp:objA,objB:package')).toEqual(
         "import { ${2:objA}, ${3:objB} } from '${1:package}';"
       );
     });
 
-    it('imp:objA,objB,objC>package', () => {
-      expect(parse('imp:objA,objB,objC>package')).toEqual(
+    it('imp:objA,objB,objC:package', () => {
+      expect(parse('imp:objA,objB,objC:package')).toEqual(
         "import { ${2:objA}, ${3:objB}, ${4:objC} } from '${1:package}';"
       );
     });
@@ -88,33 +88,33 @@ describe('parse', () => {
       expect(parse('l:name')).toEqual('let ${1:name} = $2;');
     });
 
-    it('l>name>value', () => {
-      expect(parse('l:name>value')).toEqual('let ${1:name} = ${2:value};');
+    it('l>name=value', () => {
+      expect(parse('l>name=value')).toEqual('let ${1:name} = ${2:value};');
     });
   });
 
   describe('const variable declarations', () => {
     it('c>name', () => {
-      expect(parse('c:name')).toEqual('const ${1:name} = $2;');
+      expect(parse('c>name')).toEqual('const ${1:name} = $2;');
     });
 
-    it('c>name>value', () => {
-      expect(parse('c:name>value')).toEqual('const ${1:name} = ${2:value};');
+    it('c>name=value', () => {
+      expect(parse('c>name=value')).toEqual('const ${1:name} = ${2:value};');
     });
 
-    it('c:name>value', () => {
-      expect(parse('c:name:value')).toEqual(
+    it('c:name:=value', () => {
+      expect(parse('c:name:=value')).toEqual(
         'const { ${1:name} } = ${2:value};'
       );
     });
 
-    it('c:objA,objB>value', () => {
-      expect(parse('c:objA,objB>value')).toEqual(
+    it('c:objA,objB:=value', () => {
+      expect(parse('c:objA,objB:=value')).toEqual(
         'const { ${1:objA}, ${2:objB} } = ${3:value};'
       );
     });
 
-    it('c:objA,objB,objC>value', () => {
+    it('c:objA,objB,objC:=value', () => {
       expect(parse('c:objA,objB,objC>value')).toEqual(
         'const { ${1:a}, ${2:b}, ${3:b} } = ${4:value};'
       );
