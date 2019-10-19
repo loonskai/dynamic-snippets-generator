@@ -1,6 +1,15 @@
 import * as ast from './utils/generateAST';
+import sliceNodes from './utils/sliceNodes';
+import identifiers from './constants/identifiers';
+
+interface Data {
+  type: null | string;
+  nodes: string[];
+}
 
 const parseArrowFunction = (str: string) => {};
+
+const _require = (str: string): any => {};
 
 const parse = (str: string) => {
   if (str.indexOf('=>') !== -1) {
@@ -8,13 +17,28 @@ const parse = (str: string) => {
     return;
   }
 
-  const symbols = str.split('');
-  let buffer = '';
-
-  interface Data {
-    type: null | string;
-    nodes: string[];
+  const [identifier, nodes] = sliceNodes(str);
+  switch (identifier) {
+    case identifiers.RQR:
+      return _require(nodes);
+    case identifiers.IMP:
+      return _import(nodes);
+    case identifiers.L:
+      return _let(nodes);
+    case identifiers.C:
+      return _const(nodes);
+    case identifiers.F:
+      return _function(nodes);
+    case identifiers.EX:
+      return _namedExport(nodes);
+    case identifiers.EXD:
+      return _defaultExport(nodes);
+    case identifiers.MEXP:
+      return _moduleExports(nodes);
+    default:
+      return str;
   }
+  /* let buffer = '';
 
   const data: Data = {
     type: null,
@@ -45,6 +69,7 @@ const parse = (str: string) => {
     }
 
     buffer += symbol;
+    data;
 
     if (i === symbols.length - 1) {
       data.nodes.push(buffer);
@@ -55,7 +80,7 @@ const parse = (str: string) => {
   switch (data.type) {
     case 'require':
       return ast._require(name, value || name);
-  }
+  } */
 };
 
 export default parse;

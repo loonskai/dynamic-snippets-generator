@@ -2,7 +2,7 @@ import parse from '../src/parse';
 
 describe('parse', () => {
   describe('require statement', () => {
-    /*     it('rqr>package', () => {
+    it('rqr>package', () => {
       expect(parse('rqr>package')).toEqual(
         "const ${2:package} = require('${1:package}');"
       );
@@ -13,7 +13,7 @@ describe('parse', () => {
         "const ${2:customName} = require('${1:package}');"
       );
     });
- */
+
     it('rqr::package', () => {
       expect(parse('rqr::package')).toEqual(
         "const { $2 } = require('${1:package}');"
