@@ -73,19 +73,40 @@ export default _require;
 
 /* export default function (babel) {
   const { types: t } = babel;
-  const no = ['require'];
+  let count = 1;
+
+  const modifyProperty = ({ key: { name }}, count) => {
+  	const updatedProp = t.identifier(`\${${count}:${name}}`);
+	return t.objectProperty(updatedProp, updatedProp, false, true)
+  }
   
-  const modifyProperty = ({ key: { name }}, idx) => {
-  	const updatedProp = t.identifier(`\${${idx + 1}:${name}}`);
-	  return t.objectProperty(updatedProp, updatedProp, false, true)
-  } 
+  const modifyStringLiteral = (value, count) => `\${${count}:${value}}`;
+  
+  const parseIdentifier = node => {
+    node.name = modifyStringLiteral(node.name, count);
+    count += 1;
+  };
+  
+  const parseObjectPattern = node => {
+    const { properties } = node;
+    node.properties = properties.map(prop => {
+      const updatedProp = modifyProperty(prop, count);
+      count += 1;
+      return updatedProp;
+    });
+  };
   
   return {
     name: "ast-transform", // not required
     visitor: {
-      ObjectPattern(path) {
-        const { properties } = path.node;
-        path.node.properties = properties.map(modifyProperty);
+      VariableDeclarator(path) {
+      	const { id: nodeId } = path.node;
+        if (t.isIdentifier(nodeId)) return parseIdentifier(nodeId);
+        if (t.isObjectPattern(nodeId)) return parseObjectPattern(nodeId);
+      },
+      StringLiteral(path) {
+        path.node.value = modifyStringLiteral(path.node.value, count)
+      	count += 1;
       }
     }
   };
