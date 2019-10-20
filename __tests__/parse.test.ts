@@ -1,113 +1,121 @@
-import parse from '../src/parse';
+import {
+  _require,
+  _import,
+  _let,
+  _const,
+  _functionExpression,
+  _export,
+  _exportDefault,
+  _moduleExports,
+  _arrowFunction
+} from '../src/parseCode';
 
 describe('parse', () => {
   describe('require statement', () => {
     it('rqr>package', () => {
-      expect(parse('rqr>package')).toEqual(
+      expect(_require('>package')).toEqual(
         "const package = require('package');"
       );
     });
 
     it('rqr>customName>package', () => {
-      expect(parse('rqr>customName>package')).toEqual(
+      expect(_require('>customName>package')).toEqual(
         "const customName = require('package');"
       );
     });
 
     it('rqr::package', () => {
-      expect(parse('rqr::package')).toEqual("const {} = require('package');");
+      expect(_require('::package')).toEqual("const {} = require('package');");
     });
 
     it('rqr:obj:package', () => {
-      expect(parse('rqr:obj:package')).toEqual(
+      expect(_require(':obj:package')).toEqual(
         "const {obj} = require('package');"
       );
     });
 
     it('rqr:objA,objB:package', () => {
-      expect(parse('rqr:objA,objB:package')).toEqual(
+      expect(_require(':objA,objB:package')).toEqual(
         "const {objA, objB} = require('package');"
       );
     });
 
     it('rqr:objA,objB,objC:package', () => {
-      expect(parse('rqr:objA,objB,objC:package')).toEqual(
+      expect(_require(':objA,objB,objC:package')).toEqual(
         "const {objA, objB, objC} = require('package');"
       );
     });
   });
 
   describe('import statement', () => {
-    it('imp>package', () => {
-      expect(parse('imp>package')).toEqual("import package from 'package';");
+    it('>package', () => {
+      expect(_import('>package')).toEqual("import package from 'package';");
     });
 
-    it('imp>customName>package', () => {
-      expect(parse('imp>customName>package')).toEqual(
+    it('>customName>package', () => {
+      expect(_import('>customName>package')).toEqual(
         "import customName from 'package';"
       );
     });
 
-    it('imp::package', () => {
-      expect(parse('imp::package')).toEqual("import {} from 'package';");
+    it('::package', () => {
+      expect(_import('::package')).toEqual("import {} from 'package';");
     });
 
-    it('imp:obj:package', () => {
-      expect(parse('imp:obj:package')).toEqual(
-        "import { obj } from 'package';"
-      );
+    it(':obj:package', () => {
+      expect(_import(':obj:package')).toEqual("import { obj } from 'package';");
     });
 
-    it('imp:objA,objB:package', () => {
-      expect(parse('imp:objA,objB:package')).toEqual(
+    it(':objA,objB:package', () => {
+      expect(_import(':objA,objB:package')).toEqual(
         "import { objA, objB } from 'package';"
       );
     });
 
-    it('imp:objA,objB,objC:package', () => {
-      expect(parse('imp:objA,objB,objC:package')).toEqual(
+    it(':objA,objB,objC:package', () => {
+      expect(_import(':objA,objB,objC:package')).toEqual(
         "import { objA, objB, objC } from 'package';"
       );
     });
 
-    it('imp*alias>package', () => {
-      expect(parse('imp*alias>package')).toEqual(
+    it('*alias>package', () => {
+      expect(_import('*alias>package')).toEqual(
         "import * as alias from 'package';"
       );
     });
   });
 
   describe('let variable declarations', () => {
-    it('l>name', () => {
-      expect(parse('l:name')).toEqual('let name = ;');
+    it('>name', () => {
+      expect(_let(':name')).toEqual('let name = ;');
     });
 
     it('l>name=value', () => {
-      expect(parse('l>name=value')).toEqual('let name = value;');
+      expect(_let('>name=value')).toEqual('let name = value;');
     });
   });
 
   describe('const variable declarations', () => {
-    it('c>name', () => {
-      expect(parse('c>name')).toEqual('const name = ;');
+    it('>name', () => {
+      expect(_const('>name')).toEqual('const name = ;');
     });
 
-    it('c>name=value', () => {
-      expect(parse('c>name=value')).toEqual('const name = value;');
+    it('>name=value', () => {
+      expect(_const('>name=value')).toEqual('const name = value;');
     });
 
-    it('c:obj:=value', () => {
-      expect(parse('c:obj:=value')).toEqual('const { obj } = value;');
+    it(':obj:=value', () => {
+      expect(_const(':obj:=value')).toEqual('const { obj } = value;');
     });
 
-    it('c:objA,objB:=value', () => {
-      expect(parse('c:objA,objB:=value')).toEqual(
+    it(':objA,objB:=value', () => {
+      expect(_const(':objA,objB:=value')).toEqual(
         'const { objA, objB } = value;'
       );
     });
 
-    it('c:objA,objB,objC:=value', () => {
-      expect(parse('c:objA,objB,objC>value')).toEqual(
+    it(':objA,objB,objC:=value', () => {
+      expect(_const(':objA,objB,objC>value')).toEqual(
         'const { objA, objB, objC } = value;'
       );
     });
@@ -115,268 +123,286 @@ describe('parse', () => {
 
   describe('function expression', () => {
     describe('with parameters', () => {
-      it('f>', () => {
-        expect(parse('f>')).toEqual('function () { }');
+      it('>', () => {
+        expect(_functionExpression('>')).toEqual('function () { }');
       });
 
-      it('f:>', () => {
-        expect(parse('f>')).toEqual('function () { }');
+      it(':>', () => {
+        expect(_functionExpression('>')).toEqual('function () { }');
       });
 
-      it('f:param>', () => {
-        expect(parse('f:param>')).toEqual('function (param) {  }');
+      it(':param>', () => {
+        expect(_functionExpression(':param>')).toEqual('function (param) {  }');
       });
 
-      it('f:param1,param2>', () => {
-        expect(parse('f:param1,param2>')).toEqual(
+      it(':param1,param2>', () => {
+        expect(_functionExpression(':param1,param2>')).toEqual(
           'function (param1, param2) {  }'
         );
       });
 
-      it('f:param1,param2,param3>', () => {
-        expect(parse('f:param1,param2,param3>')).toEqual(
+      it(':param1,param2,param3>', () => {
+        expect(_functionExpression(':param1,param2,param3>')).toEqual(
           'function (param1, param2, param3) {  }'
         );
       });
     });
 
     describe('with parameter destructuring', () => {
-      it('f::>', () => {
-        expect(parse('f::>')).toEqual('function ({}) { }');
+      it('::>', () => {
+        expect(_functionExpression('::>')).toEqual('function ({}) { }');
       });
 
-      it('f:param:>', () => {
-        expect(parse('f:param:>')).toEqual('function ({ param }) { }');
+      it(':param:>', () => {
+        expect(_functionExpression(':param:>')).toEqual(
+          'function ({ param }) { }'
+        );
       });
 
-      it('f:objA,objB:>', () => {
-        expect(parse('f:objA,objB:>')).toEqual('function ({ objA, objA }) { }');
+      it(':objA,objB:>', () => {
+        expect(_functionExpression(':objA,objB:>')).toEqual(
+          'function ({ objA, objA }) { }'
+        );
       });
 
-      it('f:objA,objB,objC:>', () => {
-        expect(parse('f:objA,objB,objC:>')).toEqual(
+      it(':objA,objB,objC:>', () => {
+        expect(_functionExpression(':objA,objB,objC:>')).toEqual(
           'function ({ objA, objA, objC }) { }'
         );
       });
     });
 
     describe('named function expression', () => {
-      it('f>name', () => {
-        expect(parse('f>name')).toEqual('function name() { }');
+      it('>name', () => {
+        expect(_functionExpression('>name')).toEqual('function name() { }');
       });
 
-      it('f:>name', () => {
-        expect(parse('f:>name')).toEqual('function name() { }');
+      it(':>name', () => {
+        expect(_functionExpression(':>name')).toEqual('function name() { }');
       });
 
-      it('f:param>name', () => {
-        expect(parse('f:param>name')).toEqual('function name(param) { }');
+      it(':param>name', () => {
+        expect(_functionExpression(':param>name')).toEqual(
+          'function name(param) { }'
+        );
       });
 
-      it('f:param1,param2>name', () => {
-        expect(parse('f:param1,param2>name')).toEqual(
+      it(':param1,param2>name', () => {
+        expect(_functionExpression(':param1,param2>name')).toEqual(
           'function name(param1, param2) { }'
         );
       });
 
-      it('f:param1,param2,param3>name', () => {
-        expect(parse('f:param1,param2,param3>name')).toEqual(
+      it(':param1,param2,param3>name', () => {
+        expect(_functionExpression(':param1,param2,param3>name')).toEqual(
           'function name(param1, param2, param3) { }'
         );
       });
 
-      it('f::>name', () => {
-        expect(parse('f::>')).toEqual('function name({}) { }');
+      it('::>name', () => {
+        expect(_functionExpression('::>')).toEqual('function name({}) { }');
       });
 
-      it('f:param:>name', () => {
-        expect(parse('f:param:>name')).toEqual('function name({ param }) { }');
+      it(':param:>name', () => {
+        expect(_functionExpression(':param:>name')).toEqual(
+          'function name({ param }) { }'
+        );
       });
 
-      it('f:objA,objB:>name', () => {
-        expect(parse('f:objA,objB:>name')).toEqual(
+      it(':objA,objB:>name', () => {
+        expect(_functionExpression(':objA,objB:>name')).toEqual(
           'function name({ objA, objA }) { }'
         );
       });
 
-      it('f:objA,objB,objC:>name', () => {
-        expect(parse('f:objA,objB,objC:>name')).toEqual(
+      it(':objA,objB,objC:>name', () => {
+        expect(_functionExpression(':objA,objB,objC:>name')).toEqual(
           'function name({ objA, objA, objC }) { }'
         );
       });
     });
   });
 
-  describe('export statement', () => {
-    // it('ex:', () => {
-    //   expect(parse('ex:')).toEqual('export const  = ;');
-    // });
-
-    it('ex:name', () => {
-      expect(parse('ex:name')).toEqual('export const name = ;');
+  describe('export statements', () => {
+    it(':name', () => {
+      expect(_export(':name')).toEqual('export const name = ;');
     });
 
-    // it('exd:', () => {
-    //   expect(parse('exd:')).toEqual('export default  = ;');
-    // });
-
-    it('exd:name', () => {
-      expect(parse('exd:name')).toEqual('export default name;');
+    it(':name', () => {
+      expect(_exportDefault(':name')).toEqual('export default name;');
     });
   });
 
   describe('module.exports', () => {
-    it('mexp:', () => {
-      expect(parse('mexp:')).toEqual('module.exports = ');
+    it(':', () => {
+      expect(_moduleExports(':')).toEqual('module.exports = ');
     });
 
-    it('mexp:name', () => {
-      expect(parse('mexp:name')).toEqual('module.exports = name;');
+    it(':name', () => {
+      expect(_moduleExports(':name')).toEqual('module.exports = name;');
     });
   });
 
   describe('arrow functions', () => {
     it('=>', () => {
-      expect(parse('=>')).toEqual('() => { };');
+      expect(_arrowFunction('=>')).toEqual('() => { };');
     });
 
     it('obj=>', () => {
-      expect(parse('obj=>')).toEqual('obj => { };');
+      expect(_arrowFunction('obj=>')).toEqual('obj => { };');
     });
 
     it('objA,objB=>', () => {
-      expect(parse('objA,objB=>')).toEqual('(objA, objB) => { };');
+      expect(_arrowFunction('objA,objB=>')).toEqual('(objA, objB) => { };');
     });
 
     it('objA,objB,objC=>', () => {
-      expect(parse('objA,objB,objC=>')).toEqual('(objA, objB, objC) => { };');
+      expect(_arrowFunction('objA,objB,objC=>')).toEqual(
+        '(objA, objB, objC) => { };'
+      );
     });
 
     it('::=>', () => {
-      expect(parse('::=>')).toEqual('({}) => { };');
+      expect(_arrowFunction('::=>')).toEqual('({}) => { };');
     });
 
     it(':obj:=>', () => {
-      expect(parse(':obj:=>')).toEqual('({ obj }) => { };');
+      expect(_arrowFunction(':obj:=>')).toEqual('({ obj }) => { };');
     });
 
     it(':objA,objB:=>', () => {
-      expect(parse(':objA,objB:=>')).toEqual('({ objA, objB }) => { };');
+      expect(_arrowFunction(':objA,objB:=>')).toEqual(
+        '({ objA, objB }) => { };'
+      );
     });
 
     it(':objA,objB,objC:=>', () => {
-      expect(parse(':objA,objB,objC:=>')).toEqual(
+      expect(_arrowFunction(':objA,objB,objC:=>')).toEqual(
         '({ objA, objB, objC }) => { };'
       );
     });
 
     it('name>=>', () => {
-      expect(parse('name>=>')).toEqual('const name = () => ;');
+      expect(_arrowFunction('name>=>')).toEqual('const name = () => ;');
     });
 
     it('name>obj=>', () => {
-      expect(parse('name>obj=>')).toEqual('const name = obj => ;');
+      expect(_arrowFunction('name>obj=>')).toEqual('const name = obj => ;');
     });
 
     it('name>objA,objB=>', () => {
-      expect(parse('name>objA,objB=>')).toEqual(
+      expect(_arrowFunction('name>objA,objB=>')).toEqual(
         'const name = (objA, objB) => ;'
       );
     });
 
     it('name>objA,objB,objC=>', () => {
-      expect(parse('name>objA,objB,objC=>')).toEqual(
+      expect(_arrowFunction('name>objA,objB,objC=>')).toEqual(
         'const name = (objA, objB, objC) => ;'
       );
     });
 
     it('name::=>', () => {
-      expect(parse('name::=>')).toEqual('const name = ({}) => ;');
+      expect(_arrowFunction('name::=>')).toEqual('const name = ({}) => ;');
     });
 
     it('name:obj:=>', () => {
-      expect(parse('name:obj:=>')).toEqual('const name = ({ obj }) => ;');
+      expect(_arrowFunction('name:obj:=>')).toEqual(
+        'const name = ({ obj }) => ;'
+      );
     });
 
     it('name:objA,objB:=>', () => {
-      expect(parse('name:objA,objB:=>')).toEqual(
+      expect(_arrowFunction('name:objA,objB:=>')).toEqual(
         'const name = ({ objA, objB }) => ;'
       );
     });
 
     it('name:objA,objB,objC:=>', () => {
-      expect(parse('name:objA,objB,objC:=>')).toEqual(
+      expect(_arrowFunction('name:objA,objB,objC:=>')).toEqual(
         'const name = ({ objA, objB, objC }) => ;'
       );
     });
 
     describe('async arrow functions', () => {
       it('a/=>', () => {
-        expect(parse('a/=>')).toEqual('async () => ;');
+        expect(_arrowFunction('a/=>')).toEqual('async () => ;');
       });
 
       it('a/a=>', () => {
-        expect(parse('a/a=>')).toEqual('async a => ;');
+        expect(_arrowFunction('a/a=>')).toEqual('async a => ;');
       });
 
       it('a/a,b=>', () => {
-        expect(parse('a/a,b=>')).toEqual('async (a, b) => ;');
+        expect(_arrowFunction('a/a,b=>')).toEqual('async (a, b) => ;');
       });
 
       it('a/a,b,c=>', () => {
-        expect(parse('a/a,b,c=>')).toEqual('async (a, b, c) => ;');
+        expect(_arrowFunction('a/a,b,c=>')).toEqual('async (a, b, c) => ;');
       });
 
       it('a/::=>', () => {
-        expect(parse('a/::=>')).toEqual('async ({}) => ;');
+        expect(_arrowFunction('a/::=>')).toEqual('async ({}) => ;');
       });
 
       it('a/:a:=>', () => {
-        expect(parse('a/:a:=>')).toEqual('async ({ a }) => ;');
+        expect(_arrowFunction('a/:a:=>')).toEqual('async ({ a }) => ;');
       });
 
       it('a/:a,b:=>', () => {
-        expect(parse('a/:a,b:=>')).toEqual('async ({ a, b }) => ;');
+        expect(_arrowFunction('a/:a,b:=>')).toEqual('async ({ a, b }) => ;');
       });
 
       it('a/:a,b,c:=>', () => {
-        expect(parse('a/:a,b,c:=>')).toEqual('async ({ a, b, c }) => ;');
+        expect(_arrowFunction('a/:a,b,c:=>')).toEqual(
+          'async ({ a, b, c }) => ;'
+        );
       });
 
       it('a/name>=>', () => {
-        expect(parse('a/name>=>')).toEqual('const name = async () => ;');
+        expect(_arrowFunction('a/name>=>')).toEqual(
+          'const name = async () => ;'
+        );
       });
 
       it('a/name>a=>', () => {
-        expect(parse('a/name>a=>')).toEqual('const name = async a => ;');
+        expect(_arrowFunction('a/name>a=>')).toEqual(
+          'const name = async a => ;'
+        );
       });
 
       it('a/name>a,b=>', () => {
-        expect(parse('a/name>a,b=>')).toEqual('const name = async (a, b) => ;');
+        expect(_arrowFunction('a/name>a,b=>')).toEqual(
+          'const name = async (a, b) => ;'
+        );
       });
 
       it('a/name>a,b,c=>', () => {
-        expect(parse('a/name>a,b,c=>')).toEqual(
+        expect(_arrowFunction('a/name>a,b,c=>')).toEqual(
           'const name = async (a, b, c) => ;'
         );
       });
 
       it('a/name::=>', () => {
-        expect(parse('a/name::=>')).toEqual('const name = async ({}) => ;');
+        expect(_arrowFunction('a/name::=>')).toEqual(
+          'const name = async ({}) => ;'
+        );
       });
 
       it('a/name>a=>', () => {
-        expect(parse('a/name:a:=>')).toEqual('const name = async ({ a }) => ;');
+        expect(_arrowFunction('a/name:a:=>')).toEqual(
+          'const name = async ({ a }) => ;'
+        );
       });
 
       it('a/name:a,b:=>', () => {
-        expect(parse('a/name:a,b:=>')).toEqual(
+        expect(_arrowFunction('a/name:a,b:=>')).toEqual(
           'const name = async ({ a, b }) => ;'
         );
       });
 
       it('a/name:a,b,c:=>', () => {
-        expect(parse('a/name:a,b,c:=>')).toEqual(
+        expect(_arrowFunction('a/name:a,b,c:=>')).toEqual(
           'const name = async ({ a, b, c }) => ;'
         );
       });
