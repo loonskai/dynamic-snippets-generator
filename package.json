@@ -1,7 +1,7 @@
 {
-  "name": "abbreviation-js",
+  "name": "dynamic-snippets",
   "version": "1.0.0-rc.1",
-  "description": "AbbreviationJS core library",
+  "description": "Dynamic snippets",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "devDependencies": {
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:loonskai/abbreviation-js.git"
+    "url": "git@github.com:loonskai/dynamic-snippets.git"
   },
   "author": "Siarhei Lunski <loonskai@gmail.com>",
   "license": "MIT",
