@@ -48,9 +48,7 @@ const _require = (str: string): string => {
     declarations: [
       {
         type: types.VARIABLE_DECLARATOR,
-        id: {
-          ...declaratorID
-        },
+        id: declaratorID,
         init: {
           type: types.CALL_EXPRESSION,
           callee: {
@@ -72,3 +70,23 @@ const _require = (str: string): string => {
 };
 
 export default _require;
+
+/* export default function (babel) {
+  const { types: t } = babel;
+  const no = ['require'];
+  
+  const modifyProperty = ({ key: { name }}, idx) => {
+  	const updatedProp = t.identifier(`\${${idx + 1}:${name}}`);
+	  return t.objectProperty(updatedProp, updatedProp, false, true)
+  } 
+  
+  return {
+    name: "ast-transform", // not required
+    visitor: {
+      ObjectPattern(path) {
+        const { properties } = path.node;
+        path.node.properties = properties.map(modifyProperty);
+      }
+    }
+  };
+} */
