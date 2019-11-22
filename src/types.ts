@@ -1,3 +1,10 @@
+interface FunctionParams {
+  isObjectPattern: boolean;
+  list: string[];
+}
+
+/* Node types */
+
 interface VariableDeclaration {
   type: string;
   kind: 'const' | 'let';
@@ -61,4 +68,29 @@ interface ImportNamespaceSpecifier {
   local: Identifier;
 }
 
-type AnyNode = VariableDeclaration | ImportDeclaration;
+interface FunctionDeclaration {
+  type: 'FunctionDeclaration';
+  id: Identifier;
+  async: boolean;
+  params: Array<Identifier | ObjectPattern>;
+  body: BlockStatement;
+}
+
+interface FunctionExpression {
+  type: 'FunctionExpression';
+  name: Identifier | null;
+  async: boolean;
+  params: Array<Identifier | ObjectPattern>;
+  body: BlockStatement;
+}
+
+interface BlockStatement {
+  type: 'BlockStatement';
+  body: Array<any>;
+}
+
+type AnyNode =
+  | VariableDeclaration
+  | ImportDeclaration
+  | FunctionDeclaration
+  | FunctionExpression;

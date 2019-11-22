@@ -3,6 +3,11 @@ export const parseObjectDestructuringProps = (str?: string): string[] => {
   return str.indexOf(',') ? str.split(',') : [str];
 };
 
+export const parseFunctionParams = (str: string = ''): FunctionParams => ({
+  isObjectPattern: /^:.*:$/.test(str),
+  list: parseObjectDestructuringProps(str.replace(/:/g, '')),
+});
+
 export const parseAbbreviationNodes = (
   abbreviationNodes: string,
 ): {
@@ -42,4 +47,38 @@ export const parseAbbreviationNodes = (
 
   name = name || '';
   return { name, customName, objectProperties, alias };
+};
+
+export const parseFuncAbbreviationNodes = (
+  abbreviationNodes: string,
+): {
+  name: string;
+  async: boolean;
+  functionParams: FunctionParams;
+} => {
+  let name;
+  let async = false;
+  let functionParams: FunctionParams = {
+    isObjectPattern: false,
+    list: [],
+  };
+
+  for (let i = 0; i < abbreviationNodes.length && !name; i += 1) {
+    switch (abbreviationNodes[i]) {
+      case '>': {
+        const nodes = abbreviationNodes.split('>');
+        name = nodes.pop();
+        break;
+      }
+      case ':': {
+        const nodes = abbreviationNodes.split('>');
+        name = nodes.pop();
+        functionParams = parseFunctionParams(nodes.pop());
+        break;
+      }
+    }
+  }
+
+  name = name || '';
+  return { name, async, functionParams };
 };

@@ -40,3 +40,8 @@ export const importNamespaceSpecifier = (
   type: ExpressionTypes.IMPORT_NAMESPACE_SPECIFIER,
   local: identifier(alias),
 });
+
+export const blockStatement = (): BlockStatement => ({
+  type: ExpressionTypes.BLOCK_STATEMENT,
+  body: [],
+});
