@@ -6,14 +6,14 @@ export const parseObjectDestructuringProps = (str?: string): string[] => {
 };
 
 export const parseASTProperty = (value: string) => ({
-  type: types.PROPERTY,
+  type: types.OBJECT_PROPERTY,
   shorthand: true,
   value: {
     type: types.IDENTIFIER,
-    name: value
+    name: value,
   },
   key: {
     type: types.IDENTIFIER,
-    name: value
-  }
+    name: value,
+  },
 });

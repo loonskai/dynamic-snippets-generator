@@ -7,8 +7,6 @@
   "devDependencies": {
     "@types/babel-generator": "^6.25.3",
     "@types/babel-types": "^7.0.7",
-    "@types/escodegen": "0.0.6",
-    "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^2.4.0",
     "@typescript-eslint/parser": "^2.4.0",
     "jest": "^24.9.0",
@@ -40,6 +38,7 @@
   "dependencies": {
     "@babel/parser": "^7.6.4",
     "@babel/traverse": "^7.6.3",
+    "@types/jest": "^24.0.23",
     "babel-generator": "^6.26.1",
     "babel-types": "^6.26.0",
     "escodegen": "^1.12.0"

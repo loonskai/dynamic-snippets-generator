@@ -1,6 +1,22 @@
 import parseRequireCode from './require';
+import generate from 'babel-generator';
 
-export const _require = parseRequireCode;
+const parse = (
+  str: string,
+  parseExpression: (str: string) => string,
+): string => {
+  const tree = parseExpression(str);
+  const { code } = generate(tree as any, {
+    retainLines: true,
+    quotes: 'single',
+  });
+
+  return code;
+};
+
+export const _require = (str: string) => parse(str, parseRequireCode);
+
+/* TODO */
 export const _import = (s: string) => {};
 export const _let = (s: string) => {};
 export const _const = (s: string) => {};

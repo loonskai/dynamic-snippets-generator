@@ -1,2 +1,2 @@
-# AbbreviationJS
-AbbreviationJS core library for VSCode JavaScript extension
+# Dynamic Snippets
+Dynamic Snippets generator for VSCode JavaScript extension

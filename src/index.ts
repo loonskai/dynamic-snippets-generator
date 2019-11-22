@@ -1,17 +1,17 @@
-import defineAbbreviation from './utils/defineAbbreviation';
+import identifyExpression from './identifyExpression';
 import identifiers from './constants/identifiers';
 
-import generate from './generateSnippet';
-import * as parseCode from './parseCode';
+import generate from './snippetGenerator';
+import * as parse from './parser';
 
 export default (abbreviation: string): string | null => {
   // TODO: Parse arrow functions
   if (abbreviation.indexOf('=>') !== -1) return null;
 
-  const [identifier, nodesString] = defineAbbreviation(abbreviation);
+  const [identifier, nodesString] = identifyExpression(abbreviation);
   switch (identifier) {
     case identifiers.RQR:
-      return generate(identifiers.RQR, parseCode._require(nodesString));
+      return generate(identifiers.RQR, parse._require(nodesString));
     // case identifiers.IMP:
     //   return _import(nodes);
     // case identifiers.L:

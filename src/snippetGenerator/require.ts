@@ -3,8 +3,8 @@ import generate from 'babel-generator';
 import * as t from 'babel-types';
 import * as parser from '@babel/parser';
 
-const _require = (str: string): string => {
-  const ast = parser.parse(str);
+const _require = (rawCodeStr: string): string => {
+  const ast = parser.parse(rawCodeStr);
 
   let count = 1;
   const increaseCount = () => (count += 1);
@@ -51,11 +51,11 @@ const _require = (str: string): string => {
     StringLiteral(path) {
       path.node.value = modifyStringLiteral(path.node.value, count);
       increaseCount();
-    }
+    },
   });
   const { code } = generate(ast as any, {
     retainLines: true,
-    quotes: 'single'
+    quotes: 'single',
   });
   return code;
 };

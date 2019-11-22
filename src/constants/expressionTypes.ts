@@ -1,9 +1,9 @@
 export default {
   CALL_EXPRESSION: 'CallExpression',
   IDENTIFIER: 'Identifier',
-  LITERAL: 'Literal',
+  STRING_LITERAL: 'StringLiteral',
   OBJECT_PATTERN: 'ObjectPattern',
-  PROPERTY: 'Property',
+  OBJECT_PROPERTY: 'ObjectProperty',
   VARIABLE_DECLARATION: 'VariableDeclaration',
-  VARIABLE_DECLARATOR: 'VariableDeclarator'
+  VARIABLE_DECLARATOR: 'VariableDeclarator',
 };
