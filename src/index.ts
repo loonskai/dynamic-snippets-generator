@@ -16,10 +16,6 @@ export default (abbreviation: string): string | null => {
       return generate(abbreviationIDs.RQR, parse._require(abbreviationNodes));
     // case identifiers.IMP:
     //   return _import(nodes);
-    // case identifiers.L:
-    //   return _let(nodes);
-    // case identifiers.C:
-    //   return _const(nodes);
     // case identifiers.F:
     //   return _function(nodes);
     // case identifiers.EX:

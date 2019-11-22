@@ -1,8 +1,6 @@
 enum AbbreviationIDs {
   RQR = 'rqr',
   IMP = 'imp',
-  L = 'l',
-  C = 'c',
   F = 'f',
   EX = 'ex',
   EXD = 'exd',
