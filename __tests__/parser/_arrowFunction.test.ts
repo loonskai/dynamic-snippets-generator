@@ -75,81 +75,87 @@ describe('arrow functions', () => {
     );
   });
 
-  // describe('async arrow functions', () => {
-  //   it('a/=>', () => {
-  //     expect(_arrowFunction('a/=>')).toEqual('async () => ;');
-  //   });
+  describe('async arrow functions', () => {
+    it('a/=>', () => {
+      expect(_arrowFunction('a/=>')).toEqual('async () => {};');
+    });
 
-  //   it('a/a=>', () => {
-  //     expect(_arrowFunction('a/a=>')).toEqual('async a => ;');
-  //   });
+    it('a/a=>', () => {
+      expect(_arrowFunction('a/a=>')).toEqual('async a => {};');
+    });
 
-  //   it('a/a,b=>', () => {
-  //     expect(_arrowFunction('a/a,b=>')).toEqual('async (a, b) => ;');
-  //   });
+    it('a/a,b=>', () => {
+      expect(_arrowFunction('a/a,b=>')).toEqual('async (a, b) => {};');
+    });
 
-  //   it('a/a,b,c=>', () => {
-  //     expect(_arrowFunction('a/a,b,c=>')).toEqual('async (a, b, c) => ;');
-  //   });
+    it('a/a,b,c=>', () => {
+      expect(_arrowFunction('a/a,b,c=>')).toEqual('async (a, b, c) => {};');
+    });
 
-  //   it('a/::=>', () => {
-  //     expect(_arrowFunction('a/::=>')).toEqual('async ({}) => ;');
-  //   });
+    it('a/::=>', () => {
+      expect(_arrowFunction('a/::=>')).toEqual('async ({}) => {};');
+    });
 
-  //   it('a/:a:=>', () => {
-  //     expect(_arrowFunction('a/:a:=>')).toEqual('async ({ a }) => ;');
-  //   });
+    it('a/:a:=>', () => {
+      expect(_arrowFunction('a/:a:=>')).toEqual('async ({ a }) => {};');
+    });
 
-  //   it('a/:a,b:=>', () => {
-  //     expect(_arrowFunction('a/:a,b:=>')).toEqual('async ({ a, b }) => ;');
-  //   });
+    it('a/:a,b:=>', () => {
+      expect(_arrowFunction('a/:a,b:=>')).toEqual('async ({ a, b }) => {};');
+    });
 
-  //   it('a/:a,b,c:=>', () => {
-  //     expect(_arrowFunction('a/:a,b,c:=>')).toEqual('async ({ a, b, c }) => ;');
-  //   });
+    it('a/:a,b,c:=>', () => {
+      expect(_arrowFunction('a/:a,b,c:=>')).toEqual(
+        'async ({ a, b, c }) => {};',
+      );
+    });
 
-  //   it('a/name>=>', () => {
-  //     expect(_arrowFunction('a/name>=>')).toEqual('const name = async () => ;');
-  //   });
+    it('a/name>=>', () => {
+      expect(_arrowFunction('a/name>=>')).toEqual(
+        'const name = async () => {};',
+      );
+    });
 
-  //   it('a/name>a=>', () => {
-  //     expect(_arrowFunction('a/name>a=>')).toEqual('const name = async a => ;');
-  //   });
+    it('a/name>a=>', () => {
+      expect(_arrowFunction('a/name>a=>')).toEqual(
+        'const name = async a => {};',
+      );
+    });
 
-  //   it('a/name>a,b=>', () => {
-  //     expect(_arrowFunction('a/name>a,b=>')).toEqual(
-  //       'const name = async (a, b) => ;',
-  //     );
-  //   });
+    it('a/name>a,b=>', () => {
+      expect(_arrowFunction('a/name>a,b=>')).toEqual(
+        'const name = async (a, b) => {};',
+      );
+    });
 
-  //   it('a/name>a,b,c=>', () => {
-  //     expect(_arrowFunction('a/name>a,b,c=>')).toEqual(
-  //       'const name = async (a, b, c) => ;',
-  //     );
-  //   });
+    it('a/name>a,b,c=>', () => {
+      expect(_arrowFunction('a/name>a,b,c=>')).toEqual(
+        'const name = async (a, b, c) => {};',
+      );
+    });
 
-  //   it('a/name::=>', () => {
-  //     expect(_arrowFunction('a/name::=>')).toEqual(
-  //       'const name = async ({}) => ;',
-  //     );
-  //   });
+    it('a/name>::=>', () => {
+      expect(_arrowFunction('a/name>::=>')).toEqual(
+        'const name = async ({}) => {};',
+      );
+    });
 
-  //   it('a/name>a=>', () => {
-  //     expect(_arrowFunction('a/name:a:=>')).toEqual(
-  //       'const name = async ({ a }) => ;',
-  //     );
-  //   });
+    it('a/name>:a:=>', () => {
+      expect(_arrowFunction('a/name>:a:=>')).toEqual(
+        'const name = async ({ a }) => {};',
+      );
+    });
 
-  //   it('a/name:a,b:=>', () => {
-  //     expect(_arrowFunction('a/name:a,b:=>')).toEqual(
-  //       'const name = async ({ a, b }) => ;',
-  //     );
-  //   });
+    it('a/name>:a,b:=>', () => {
+      expect(_arrowFunction('a/name>:a,b:=>')).toEqual(
+        'const name = async ({ a, b }) => {};',
+      );
+    });
 
-  //   it('a/name:a,b,c:=>', () => {
-  //     expect(_arrowFunction('a/name:a,b,c:=>')).toEqual(
-  //       'const name = async ({ a, b, c }) => ;',
-  //     );
-  //   });
-  // });
+    it('a/name>:a,b,c:=>', () => {
+      expect(_arrowFunction('a/name>:a,b,c:=>')).toEqual(
+        'const name = async ({ a, b, c }) => {};',
+      );
+    });
+  });
 });

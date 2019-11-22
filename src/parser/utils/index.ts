@@ -90,7 +90,7 @@ export const parseArrowFuncAbbreviationNodes = (
   async: boolean;
   functionParams: FunctionParams;
 } => {
-  const nodesString = abbreviationNodes.split('=>')[0];
+  let nodesString = abbreviationNodes.split('=>')[0];
   let name;
   let async = false;
   let functionParams: FunctionParams = {
@@ -98,6 +98,11 @@ export const parseArrowFuncAbbreviationNodes = (
     list: [],
   };
 
+  const asyncRe = /a\//;
+  if (asyncRe.test(nodesString)) {
+    async = true;
+    nodesString = nodesString.replace(asyncRe, '');
+  }
   const nodes = nodesString.split('>');
   const paramsString = nodes.pop();
   name = nodes.pop();
