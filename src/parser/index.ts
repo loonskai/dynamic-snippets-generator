@@ -1,6 +1,7 @@
+import generate from 'babel-generator';
 import parseRequire from './parseRequire';
 import parseES6Import from './parseES6Import';
-import generate from 'babel-generator';
+import checkCornerCases from './utils/checkCornerCases';
 
 const parse = (
   abbreviation: string,
@@ -12,14 +13,6 @@ const parse = (
     quotes: 'single',
   });
   return code;
-};
-
-const checkCornerCases = (code: string): string => {
-  let codeProcessed;
-  if (/^import '/.test(code)) {
-    codeProcessed = code.replace(/^import /, 'import {} from ');
-  }
-  return codeProcessed || code;
 };
 
 export const _require = (abbreviation: string) =>

@@ -28,7 +28,6 @@ export const parseAbbreviationNodes = (
       }
       case ':': {
         const nodes = abbreviationNodes.split(':');
-        console.log(nodes);
         name = nodes.pop();
         objectProperties = parseObjectDestructuringProps(nodes.pop());
         break;
