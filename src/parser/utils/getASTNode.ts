@@ -33,3 +33,10 @@ export const importSpecifier = (name: string): ImportSpecifier => ({
   type: ExpressionTypes.IMPORT_SPECIFIER,
   imported: identifier(name),
 });
+
+export const importNamespaceSpecifier = (
+  alias: string,
+): ImportNamespaceSpecifier => ({
+  type: ExpressionTypes.IMPORT_NAMESPACE_SPECIFIER,
+  local: identifier(alias),
+});

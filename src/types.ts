@@ -40,7 +40,9 @@ interface CallExpression {
 
 interface ImportDeclaration {
   type: 'ImportDeclaration';
-  specifiers: Array<ImportDefaultSpecifier | ImportSpecifier>;
+  specifiers: Array<
+    ImportDefaultSpecifier | ImportSpecifier | ImportNamespaceSpecifier
+  >;
   source: StringLiteral;
 }
 
@@ -54,4 +56,9 @@ interface ImportSpecifier {
   imported: Identifier;
 }
 
-type AnyNode = VariableDeclaration;
+interface ImportNamespaceSpecifier {
+  type: 'ImportNamespaceSpecifier';
+  local: Identifier;
+}
+
+type AnyNode = VariableDeclaration | ImportDeclaration;

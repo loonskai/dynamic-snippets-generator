@@ -9,10 +9,13 @@ export const parseAbbreviationNodes = (
   name: string;
   customName?: string;
   objectProperties?: string[];
+  alias?: string;
 } => {
   let name;
   let customName;
   let objectProperties;
+  let alias;
+
   for (let i = 0; i < abbreviationNodes.length && !name; i += 1) {
     switch (abbreviationNodes[i]) {
       case '>': {
@@ -29,8 +32,14 @@ export const parseAbbreviationNodes = (
         objectProperties = parseObjectDestructuringProps(nodes.pop());
         break;
       }
+      case '*': {
+        const nodes = abbreviationNodes.split(/[>*]/);
+        name = nodes.pop();
+        alias = nodes.pop();
+      }
     }
   }
+
   name = name || '';
-  return { name, customName, objectProperties };
+  return { name, customName, objectProperties, alias };
 };

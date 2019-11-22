@@ -9,6 +9,7 @@ enum ExpressionTypes {
   IMPORT_DECLARATION = 'ImportDeclaration',
   IMPORT_DEFAULT_SPECIFIER = 'ImportDefaultSpecifier',
   IMPORT_SPECIFIER = 'ImportSpecifier',
+  IMPORT_NAMESPACE_SPECIFIER = 'ImportNamespaceSpecifier',
 }
 
 export default ExpressionTypes;
