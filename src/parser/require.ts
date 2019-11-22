@@ -1,20 +1,14 @@
-import types from '../constants/expressionTypes';
-import { parseObjectDestructuringProps, parseASTProperty } from './utils';
+import ExpressionTypes from '../constants/expressionTypes';
+import { parseObjectDestructuringProps, parseObjectProperty } from './utils';
 
-interface Tree {
-  type: string;
-  kind: string;
-  declarations: any;
-}
-
-const _require = (str: string): any => {
+const _require = (abbreviationNodes: string): VariableDeclaration => {
   let name;
   let customName;
   let desctructuredProps;
-  for (let i = 0; i < str.length && !name; i += 1) {
-    switch (str[i]) {
+  for (let i = 0; i < abbreviationNodes.length && !name; i += 1) {
+    switch (abbreviationNodes[i]) {
       case '>': {
-        const nodes = str.split('>');
+        const nodes = abbreviationNodes.split('>');
         name = nodes.pop();
         if (nodes.length > 1) {
           customName = nodes.pop();
@@ -22,7 +16,7 @@ const _require = (str: string): any => {
         break;
       }
       case ':': {
-        const nodes = str.split(':');
+        const nodes = abbreviationNodes.split(':');
         name = nodes.pop();
         desctructuredProps = parseObjectDestructuringProps(nodes.pop());
         break;
@@ -30,33 +24,33 @@ const _require = (str: string): any => {
     }
   }
 
-  const declaratorID = desctructuredProps
+  const declaratorID: Identifier | ObjectPattern = desctructuredProps
     ? {
-        type: types.OBJECT_PATTERN,
-        properties: desctructuredProps.map(parseASTProperty),
+        type: ExpressionTypes.OBJECT_PATTERN,
+        properties: desctructuredProps.map(parseObjectProperty),
       }
     : {
-        type: types.IDENTIFIER,
-        name: customName || name,
+        type: ExpressionTypes.IDENTIFIER,
+        name: customName || name || '',
       };
 
-  const tree: Tree = {
-    type: types.VARIABLE_DECLARATION,
+  const tree: VariableDeclaration = {
+    type: ExpressionTypes.VARIABLE_DECLARATION,
     kind: 'const',
     declarations: [
       {
-        type: types.VARIABLE_DECLARATOR,
+        type: ExpressionTypes.VARIABLE_DECLARATOR,
         id: declaratorID,
         init: {
-          type: types.CALL_EXPRESSION,
+          type: ExpressionTypes.CALL_EXPRESSION,
           callee: {
-            type: types.IDENTIFIER,
+            type: ExpressionTypes.IDENTIFIER,
             name: 'require',
           },
           arguments: [
             {
-              type: types.STRING_LITERAL,
-              value: name,
+              type: ExpressionTypes.STRING_LITERAL,
+              value: name || '',
             },
           ],
         },

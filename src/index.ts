@@ -1,5 +1,5 @@
-import identifyExpression from './identifyExpression';
-import identifiers from './constants/identifiers';
+import tokenizeAbbreviation from './tokenizeAbbreviation';
+import abbreviationIDs from './constants/abbreviationIDs';
 
 import generate from './snippetGenerator';
 import * as parse from './parser';
@@ -8,10 +8,12 @@ export default (abbreviation: string): string | null => {
   // TODO: Parse arrow functions
   if (abbreviation.indexOf('=>') !== -1) return null;
 
-  const [identifier, nodesString] = identifyExpression(abbreviation);
-  switch (identifier) {
-    case identifiers.RQR:
-      return generate(identifiers.RQR, parse._require(nodesString));
+  const [abbreviationID, abbreviationNodes] = tokenizeAbbreviation(
+    abbreviation,
+  );
+  switch (abbreviationID) {
+    case abbreviationIDs.RQR:
+      return generate(abbreviationIDs.RQR, parse._require(abbreviationNodes));
     // case identifiers.IMP:
     //   return _import(nodes);
     // case identifiers.L:

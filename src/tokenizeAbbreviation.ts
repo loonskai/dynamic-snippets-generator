@@ -1,9 +1,9 @@
 const identifyExpression = (abbreviation: string): string[] => {
   const re = /[>:]/;
-  const [identifier] = abbreviation.split(re);
+  const [abbreviationID] = abbreviation.split(re);
   const idx = abbreviation.search(re);
-  const nodesString = abbreviation.slice(idx);
-  return [identifier, nodesString];
+  const abbreviationNodes = abbreviation.slice(idx);
+  return [abbreviationID, abbreviationNodes];
 };
 
 export default identifyExpression;

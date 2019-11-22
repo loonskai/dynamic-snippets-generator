@@ -1,19 +1,19 @@
-import types from '../../constants/expressionTypes';
+import ExpressionTypes from '../../constants/expressionTypes';
 
 export const parseObjectDestructuringProps = (str?: string): string[] => {
   if (!str) return [];
   return str.indexOf(',') ? str.split(',') : [str];
 };
 
-export const parseASTProperty = (value: string) => ({
-  type: types.OBJECT_PROPERTY,
+export const parseObjectProperty = (value: string): ObjectProperty => ({
+  type: ExpressionTypes.OBJECT_PROPERTY,
   shorthand: true,
   value: {
-    type: types.IDENTIFIER,
+    type: ExpressionTypes.IDENTIFIER,
     name: value,
   },
   key: {
-    type: types.IDENTIFIER,
+    type: ExpressionTypes.IDENTIFIER,
     name: value,
   },
 });
