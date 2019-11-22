@@ -2,7 +2,9 @@ import ExpressionTypes from '../constants/expressionTypes';
 import { parseAbbreviationNodes } from './utils';
 import * as getASTNode from './utils/getASTNode';
 
-const parseRequire = (abbreviationNodes: string): VariableDeclaration => {
+const parseRequire = (
+  abbreviationNodes: string,
+): VariableDeclaration<CallExpression> => {
   const { name, customName, objectProperties } = parseAbbreviationNodes(
     abbreviationNodes,
   );

@@ -1,4 +1,4 @@
-const identifyExpression = (abbreviation: string): string[] => {
+const tokenizeAbbreviation = (abbreviation: string): string[] => {
   const re = /[>:]/;
   const [abbreviationID] = abbreviation.split(re);
   const idx = abbreviation.search(re);
@@ -6,4 +6,4 @@ const identifyExpression = (abbreviation: string): string[] => {
   return [abbreviationID, abbreviationNodes];
 };
 
-export default identifyExpression;
+export default tokenizeAbbreviation;

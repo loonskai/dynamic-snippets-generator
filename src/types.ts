@@ -5,16 +5,16 @@ interface FunctionParams {
 
 /* Node types */
 
-interface VariableDeclaration {
+interface VariableDeclaration<T> {
   type: string;
   kind: 'const' | 'let';
-  declarations: Array<VariableDeclarator>;
+  declarations: Array<VariableDeclarator<T>>;
 }
 
-interface VariableDeclarator {
+interface VariableDeclarator<T> {
   type: 'VariableDeclarator';
   id: ObjectPattern | Identifier;
-  init: CallExpression;
+  init: T;
 }
 
 interface Identifier {
@@ -68,20 +68,24 @@ interface ImportNamespaceSpecifier {
   local: Identifier;
 }
 
-interface FunctionDeclaration {
-  type: 'FunctionDeclaration';
-  id: Identifier;
+interface BaseFunstionExpression {
+  id: Identifier | null;
   async: boolean;
   params: Array<Identifier | ObjectPattern>;
   body: BlockStatement;
 }
 
-interface FunctionExpression {
+interface FunctionExpression extends BaseFunstionExpression {
   type: 'FunctionExpression';
-  id: Identifier | null;
-  async: boolean;
-  params: Array<Identifier | ObjectPattern>;
-  body: BlockStatement;
+}
+
+interface ArrowFunctionExpression extends BaseFunstionExpression {
+  type: 'ArrowFunctionExpression';
+}
+
+interface ExpressionStatement<T> {
+  type: 'ExpressionStatement';
+  expression: T;
 }
 
 interface BlockStatement {
@@ -90,7 +94,7 @@ interface BlockStatement {
 }
 
 type AnyNode =
-  | VariableDeclaration
+  | VariableDeclaration<any>
   | ImportDeclaration
-  | FunctionDeclaration
-  | FunctionExpression;
+  | FunctionExpression
+  | ArrowFunctionExpression;

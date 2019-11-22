@@ -10,9 +10,10 @@ enum ExpressionTypes {
   IMPORT_DEFAULT_SPECIFIER = 'ImportDefaultSpecifier',
   IMPORT_SPECIFIER = 'ImportSpecifier',
   IMPORT_NAMESPACE_SPECIFIER = 'ImportNamespaceSpecifier',
-  FUNCTION_DECLARATION = 'FunctionDeclaration',
   FUNCTION_EXPRESSION = 'FunctionExpression',
   BLOCK_STATEMENT = 'BlockStatement',
+  ARROW_FUNCTION_EXPRESSION = 'ArrowFunctionExpression',
+  EXPRESSION_STATEMENT = 'ExpressionStatement',
 }
 
 export default ExpressionTypes;

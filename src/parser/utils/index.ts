@@ -82,3 +82,27 @@ export const parseFuncAbbreviationNodes = (
   name = name || '';
   return { name, async, functionParams };
 };
+
+export const parseArrowFuncAbbreviationNodes = (
+  abbreviationNodes: string,
+): {
+  name: string;
+  async: boolean;
+  functionParams: FunctionParams;
+} => {
+  const nodesString = abbreviationNodes.split('=>')[0];
+  let name;
+  let async = false;
+  let functionParams: FunctionParams = {
+    isObjectPattern: false,
+    list: [],
+  };
+
+  const nodes = nodesString.split('>');
+  const paramsString = nodes.pop();
+  name = nodes.pop();
+  functionParams = parseFunctionParams(paramsString);
+
+  name = name || '';
+  return { name, async, functionParams };
+};

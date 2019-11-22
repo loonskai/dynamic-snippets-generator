@@ -2,7 +2,7 @@ import ExpressionTypes from '../constants/expressionTypes';
 import { parseFuncAbbreviationNodes } from './utils';
 import * as getASTNode from './utils/getASTNode';
 
-export const parseFunctionExpression = (
+const parseFunctionExpression = (
   abbreviationNodes: string,
 ): FunctionExpression => {
   const { name, async, functionParams } = parseFuncAbbreviationNodes(
