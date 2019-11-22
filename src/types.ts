@@ -78,7 +78,7 @@ interface FunctionDeclaration {
 
 interface FunctionExpression {
   type: 'FunctionExpression';
-  name: Identifier | null;
+  id: Identifier | null;
   async: boolean;
   params: Array<Identifier | ObjectPattern>;
   body: BlockStatement;
