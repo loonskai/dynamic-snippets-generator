@@ -11,14 +11,21 @@ const parse = (
     retainLines: true,
     quotes: 'single',
   });
-
   return code;
+};
+
+const checkCornerCases = (code: string): string => {
+  let codeProcessed;
+  if (/^import '/.test(code)) {
+    codeProcessed = code.replace(/^import /, 'import {} from ');
+  }
+  return codeProcessed || code;
 };
 
 export const _require = (abbreviation: string) =>
   parse(abbreviation, parseRequire);
 export const _import = (abbreviation: string) =>
-  parse(abbreviation, parseES6Import);
+  checkCornerCases(parse(abbreviation, parseES6Import));
 
 /* TODO */
 export const _let = (abbreviation: string) => {};
