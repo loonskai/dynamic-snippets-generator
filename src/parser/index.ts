@@ -1,12 +1,12 @@
-import parseRequire from './require';
-import parseES6Import from './import';
+import parseRequire from './parseRequire';
+import parseES6Import from './parseES6Import';
 import generate from 'babel-generator';
 
 const parse = (
   abbreviation: string,
-  parseExpression: (str: string) => AnyNode,
+  parser: (str: string) => AnyNode,
 ): string => {
-  const tree = parseExpression(abbreviation);
+  const tree = parser(abbreviation);
   const { code } = generate(tree as any, {
     retainLines: true,
     quotes: 'single',

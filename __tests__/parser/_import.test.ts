@@ -1,4 +1,4 @@
-import { _import } from '../../../src/parser';
+import { _import } from '../../src/parser';
 
 describe('import statement', () => {
   it('>package', () => {

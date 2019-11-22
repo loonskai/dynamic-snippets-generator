@@ -38,4 +38,20 @@ interface CallExpression {
   arguments: Array<StringLiteral>;
 }
 
+interface ImportDeclaration {
+  type: 'ImportDeclaration';
+  specifiers: Array<ImportDefaultSpecifier | ImportSpecifier>;
+  source: StringLiteral;
+}
+
+interface ImportDefaultSpecifier {
+  type: 'ImportDefaultSpecifier';
+  local: Identifier;
+}
+
+interface ImportSpecifier {
+  type: 'ImportSpecifier';
+  imported: Identifier;
+}
+
 type AnyNode = VariableDeclaration;

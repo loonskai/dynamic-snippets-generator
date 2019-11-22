@@ -6,6 +6,9 @@ enum ExpressionTypes {
   OBJECT_PROPERTY = 'ObjectProperty',
   VARIABLE_DECLARATION = 'VariableDeclaration',
   VARIABLE_DECLARATOR = 'VariableDeclarator',
+  IMPORT_DECLARATION = 'ImportDeclaration',
+  IMPORT_DEFAULT_SPECIFIER = 'ImportDefaultSpecifier',
+  IMPORT_SPECIFIER = 'ImportSpecifier',
 }
 
 export default ExpressionTypes;
