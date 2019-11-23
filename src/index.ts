@@ -11,9 +11,10 @@ export default (abbreviation: string): string | null => {
   const [abbreviationID, abbreviationNodes] = tokenizeAbbreviation(
     abbreviation,
   );
+
   switch (abbreviationID) {
     case abbreviationIDs.RQR:
-      return generate(abbreviationIDs.RQR, parse._require(abbreviationNodes));
+      return generate.require(parse._require(abbreviationNodes));
     // case identifiers.IMP:
     //   return _import(nodes);
     // case identifiers.F:
