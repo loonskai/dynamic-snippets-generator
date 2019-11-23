@@ -3,6 +3,8 @@ import generate from 'babel-generator';
 import * as t from 'babel-types';
 import * as parser from '@babel/parser';
 
+import { getPlaceholder, getNamedPlaceholder } from './utils';
+
 const _require = (rawCodeStr: string): string => {
   const ast = parser.parse(rawCodeStr);
 
@@ -12,23 +14,20 @@ const _require = (rawCodeStr: string): string => {
   const modifyProperty = (property: any, count: any) => {
     let updatedProp;
     if (!property) {
-      updatedProp = t.identifier(`\$${count}`);
+      updatedProp = t.identifier(getPlaceholder(count));
     } else {
       const { key: { name } = { name: null } } = property;
-      updatedProp = t.identifier(`\${${count}:${name}}`);
+      updatedProp = t.identifier(getNamedPlaceholder(count, name));
     }
     return t.objectProperty(updatedProp, updatedProp, false, true);
   };
 
-  const modifyStringLiteral = (value: string, count: number): string =>
-    `\${${count}:${value}}`;
-
-  const parseIdentifier = (node: any) => {
-    node.name = modifyStringLiteral(node.name, count);
+  const modifyIdentifier = (node: any) => {
+    node.name = getNamedPlaceholder(count, node.name);
     increaseCount();
   };
 
-  const parseObjectPattern = (node: any) => {
+  const modifyObjectPattern = (node: any) => {
     const { properties } = node;
     if (properties.length === 0) {
       node.properties = [modifyProperty(null, count)];
@@ -45,11 +44,11 @@ const _require = (rawCodeStr: string): string => {
   traverse(ast, {
     VariableDeclarator(path) {
       const { id: nodeId } = path.node;
-      if (t.isIdentifier(nodeId)) return parseIdentifier(nodeId);
-      if (t.isObjectPattern(nodeId)) return parseObjectPattern(nodeId);
+      if (t.isIdentifier(nodeId)) return modifyIdentifier(nodeId);
+      if (t.isObjectPattern(nodeId)) return modifyObjectPattern(nodeId);
     },
     StringLiteral(path) {
-      path.node.value = modifyStringLiteral(path.node.value, count);
+      path.node.value = getNamedPlaceholder(count, path.node.value);
       increaseCount();
     },
   });
