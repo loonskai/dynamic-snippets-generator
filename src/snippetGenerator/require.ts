@@ -4,7 +4,6 @@ import * as t from 'babel-types';
 import * as parser from '@babel/parser';
 
 const _require = (rawCodeStr: string): string => {
-  console.log(rawCodeStr);
   const ast = parser.parse(rawCodeStr);
 
   let count = 1;
