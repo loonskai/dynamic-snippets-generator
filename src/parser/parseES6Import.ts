@@ -1,4 +1,4 @@
-import ExpressionTypes from '../constants/expressionTypes';
+import NodeTypes from '../constants/nodeTypes';
 import { parseAbbreviationNodes } from './utils';
 import * as getASTNode from './utils/getASTNode';
 
@@ -14,7 +14,7 @@ const parseES6Import = (abbreviationNodes: string): ImportDeclaration => {
     : [getASTNode.importDefaultSpecifier(customName || name)];
 
   return {
-    type: ExpressionTypes.IMPORT_DECLARATION,
+    type: NodeTypes.IMPORT_DECLARATION,
     specifiers,
     source: getASTNode.stringLiteral(name),
   };

@@ -1,22 +1,22 @@
-import ExpressionTypes from '../../constants/expressionTypes';
+import NodeTypes from '../../constants/nodeTypes';
 
 export const identifier = (name: string): Identifier => ({
-  type: ExpressionTypes.IDENTIFIER,
+  type: NodeTypes.IDENTIFIER,
   name,
 });
 
 export const stringLiteral = (value: string): StringLiteral => ({
-  type: ExpressionTypes.STRING_LITERAL,
+  type: NodeTypes.STRING_LITERAL,
   value,
 });
 
 export const objectPattern = (properties: string[]): ObjectPattern => ({
-  type: ExpressionTypes.OBJECT_PATTERN,
+  type: NodeTypes.OBJECT_PATTERN,
   properties: properties.map(objectProperty),
 });
 
 export const objectProperty = (name: string): ObjectProperty => ({
-  type: ExpressionTypes.OBJECT_PROPERTY,
+  type: NodeTypes.OBJECT_PROPERTY,
   shorthand: true,
   value: identifier(name),
   key: identifier(name),
@@ -25,24 +25,24 @@ export const objectProperty = (name: string): ObjectProperty => ({
 export const importDefaultSpecifier = (
   name: string,
 ): ImportDefaultSpecifier => ({
-  type: ExpressionTypes.IMPORT_DEFAULT_SPECIFIER,
+  type: NodeTypes.IMPORT_DEFAULT_SPECIFIER,
   local: identifier(name),
 });
 
 export const importSpecifier = (name: string): ImportSpecifier => ({
-  type: ExpressionTypes.IMPORT_SPECIFIER,
+  type: NodeTypes.IMPORT_SPECIFIER,
   imported: identifier(name),
 });
 
 export const importNamespaceSpecifier = (
   alias: string,
 ): ImportNamespaceSpecifier => ({
-  type: ExpressionTypes.IMPORT_NAMESPACE_SPECIFIER,
+  type: NodeTypes.IMPORT_NAMESPACE_SPECIFIER,
   local: identifier(alias),
 });
 
 export const blockStatement = (): BlockStatement => ({
-  type: ExpressionTypes.BLOCK_STATEMENT,
+  type: NodeTypes.BLOCK_STATEMENT,
   body: [],
 });
 
@@ -55,7 +55,7 @@ export const arrowFunctionExpression = ({
   params: Array<ObjectPattern | Identifier>;
   async: boolean;
 }): ArrowFunctionExpression => ({
-  type: ExpressionTypes.ARROW_FUNCTION_EXPRESSION,
+  type: NodeTypes.ARROW_FUNCTION_EXPRESSION,
   id,
   params,
   async,
@@ -69,7 +69,7 @@ export const assignmentExpression = ({
   left: any;
   right: any;
 }): AssignmentExpression => ({
-  type: ExpressionTypes.ASSIGNMENT_EXPRESSION,
+  type: NodeTypes.ASSIGNMENT_EXPRESSION,
   operator: '=',
   left,
   right,
@@ -84,7 +84,7 @@ export const memberExpression = ({
   property: string;
   computed?: boolean;
 }): MemberExpression => ({
-  type: ExpressionTypes.MEMBER_EXPRESSION,
+  type: NodeTypes.MEMBER_EXPRESSION,
   object: identifier(object),
   property: identifier(property),
   computed,

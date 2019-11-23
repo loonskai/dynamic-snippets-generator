@@ -1,4 +1,4 @@
-import ExpressionTypes from '../constants/expressionTypes';
+import NodeTypes from '../constants/nodeTypes';
 import { parseFuncAbbreviationNodes } from './utils';
 import * as getASTNode from './utils/getASTNode';
 
@@ -14,7 +14,7 @@ const parseFunctionExpression = (
     : list.map(getASTNode.identifier);
   const id = name ? getASTNode.identifier(name) : null;
   return {
-    type: ExpressionTypes.FUNCTION_EXPRESSION,
+    type: NodeTypes.FUNCTION_EXPRESSION,
     id,
     async,
     params,

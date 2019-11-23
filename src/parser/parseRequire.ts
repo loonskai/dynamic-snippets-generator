@@ -1,4 +1,4 @@
-import ExpressionTypes from '../constants/expressionTypes';
+import NodeTypes from '../constants/nodeTypes';
 import { parseAbbreviationNodes } from './utils';
 import * as getASTNode from './utils/getASTNode';
 
@@ -14,14 +14,14 @@ const parseRequire = (
     : getASTNode.identifier(customName || name);
 
   return {
-    type: ExpressionTypes.VARIABLE_DECLARATION,
+    type: NodeTypes.VARIABLE_DECLARATION,
     kind: 'const',
     declarations: [
       {
-        type: ExpressionTypes.VARIABLE_DECLARATOR,
+        type: NodeTypes.VARIABLE_DECLARATOR,
         id: declaratorID,
         init: {
-          type: ExpressionTypes.CALL_EXPRESSION,
+          type: NodeTypes.CALL_EXPRESSION,
           callee: getASTNode.identifier('require'),
           arguments: [getASTNode.stringLiteral(name)],
         },

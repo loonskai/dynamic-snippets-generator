@@ -1,4 +1,4 @@
-enum ExpressionTypes {
+enum NodeTypes {
   CALL_EXPRESSION = 'CallExpression',
   IDENTIFIER = 'Identifier',
   STRING_LITERAL = 'StringLiteral',
@@ -20,4 +20,4 @@ enum ExpressionTypes {
   MEMBER_EXPRESSION = 'MemberExpression',
 }
 
-export default ExpressionTypes;
+export default NodeTypes;

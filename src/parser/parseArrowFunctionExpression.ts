@@ -1,4 +1,4 @@
-import ExpressionTypes from '../constants/expressionTypes';
+import NodeTypes from '../constants/nodeTypes';
 import { parseArrowFuncAbbreviationNodes } from './utils';
 import * as getASTNode from './utils/getASTNode';
 
@@ -18,11 +18,11 @@ const parseArrowFunctionExpression = (
 
   return name
     ? {
-        type: ExpressionTypes.VARIABLE_DECLARATION,
+        type: NodeTypes.VARIABLE_DECLARATION,
         kind: 'const',
         declarations: [
           {
-            type: ExpressionTypes.VARIABLE_DECLARATOR,
+            type: NodeTypes.VARIABLE_DECLARATOR,
             id: getASTNode.identifier(name),
             init: getASTNode.arrowFunctionExpression({
               id: getASTNode.identifier(name),
@@ -33,7 +33,7 @@ const parseArrowFunctionExpression = (
         ],
       }
     : {
-        type: ExpressionTypes.EXPRESSION_STATEMENT,
+        type: NodeTypes.EXPRESSION_STATEMENT,
         expression: getASTNode.arrowFunctionExpression({
           id: null,
           params,

@@ -1,4 +1,4 @@
-import ExpressionTypes from '../constants/expressionTypes';
+import NodeTypes from '../constants/nodeTypes';
 import { parseExportAbbreviationNodes } from './utils';
 import * as getASTNode from './utils/getASTNode';
 
@@ -18,7 +18,7 @@ const parseExport = (
   const { name } = parseExportAbbreviationNodes(abbreviationNodes);
   if (!es6)
     return {
-      type: ExpressionTypes.EXPRESSION_STATEMENT,
+      type: NodeTypes.EXPRESSION_STATEMENT,
       expression: getASTNode.assignmentExpression({
         left: getASTNode.memberExpression({
           object: 'module',
@@ -30,17 +30,17 @@ const parseExport = (
 
   return isDefault
     ? {
-        type: ExpressionTypes.EXPORT_DEFAULT_DECLARATION,
+        type: NodeTypes.EXPORT_DEFAULT_DECLARATION,
         declaration: getASTNode.identifier(name),
       }
     : {
-        type: ExpressionTypes.EXPORT_NAMED_DECLARATION,
+        type: NodeTypes.EXPORT_NAMED_DECLARATION,
         declaration: {
-          type: ExpressionTypes.VARIABLE_DECLARATION,
+          type: NodeTypes.VARIABLE_DECLARATION,
           kind: 'const',
           declarations: [
             {
-              type: ExpressionTypes.VARIABLE_DECLARATOR,
+              type: NodeTypes.VARIABLE_DECLARATOR,
               id: getASTNode.identifier('name'),
               init: getASTNode.identifier('name'),
             },
