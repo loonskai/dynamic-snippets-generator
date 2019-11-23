@@ -23,7 +23,12 @@ const _import = (rawCodeStr: string): string => {
       increaseCount();
     },
     StringLiteral(path) {
-      path.node.value = getNamedPlaceholder(count, path.node.value);
+      const initialName = path.node.value;
+      if (isPlaceholder(initialName)) return;
+
+      const newName = getNamedPlaceholder(count, initialName);
+      const newStringLiteral = generateNode.stringLiteral(newName);
+      path.replaceWith(newStringLiteral as any);
       increaseCount();
     },
     ImportSpecifier(path) {

@@ -4,26 +4,30 @@ import {
   ImportSpecifier,
   ImportDefaultSpecifier,
   ImportNamespaceSpecifier,
+  StringLiteral,
 } from 'babel-types';
 
-export const identifier = (name: string): Identifier => t.identifier(name);
+export const identifier = (value: string): Identifier => t.identifier(value);
 
-export const importSpecifier = (name: string): ImportSpecifier => {
-  const local = identifier(name);
-  const imported = identifier(name);
+export const importSpecifier = (value: string): ImportSpecifier => {
+  const local = identifier(value);
+  const imported = identifier(value);
   return t.importSpecifier(local, imported);
 };
 
 export const importDefaultSpecifier = (
-  name: string,
+  value: string,
 ): ImportDefaultSpecifier => {
-  const local = identifier(name);
+  const local = identifier(value);
   return t.importDefaultSpecifier(local);
 };
 
 export const importNamespaceSpecifier = (
-  name: string,
+  value: string,
 ): ImportNamespaceSpecifier => {
-  const local = identifier(name);
+  const local = identifier(value);
   return t.importNamespaceSpecifier(local);
 };
+
+export const stringLiteral = (value: string): StringLiteral =>
+  t.stringLiteral(value);
