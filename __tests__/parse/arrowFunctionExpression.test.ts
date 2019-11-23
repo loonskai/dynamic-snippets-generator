@@ -1,6 +1,6 @@
 import { _arrowFunction } from '../../src/parser';
 
-describe('arrow function declaration', () => {
+describe('arrow function expression', () => {
   it('name>=>', () => {
     expect(_arrowFunction('name>=>')).toEqual('const name = () => {};');
   });
@@ -21,10 +21,6 @@ describe('arrow function declaration', () => {
     );
   });
 
-  it('name>::=>', () => {
-    expect(_arrowFunction('name>::=>')).toEqual('const name = ({}) => {};');
-  });
-
   it('name>:obj:=>', () => {
     expect(_arrowFunction('name>:obj:=>')).toEqual(
       'const name = ({ obj }) => {};',
@@ -43,7 +39,7 @@ describe('arrow function declaration', () => {
     );
   });
 
-  describe('async arrow function declaration', () => {
+  describe('async arrow function expression', () => {
     it('a/name>=>', () => {
       expect(_arrowFunction('a/name>=>')).toEqual(
         'const name = async () => {};',
@@ -65,12 +61,6 @@ describe('arrow function declaration', () => {
     it('a/name>a,b,c=>', () => {
       expect(_arrowFunction('a/name>a,b,c=>')).toEqual(
         'const name = async (a, b, c) => {};',
-      );
-    });
-
-    it('a/name>::=>', () => {
-      expect(_arrowFunction('a/name>::=>')).toEqual(
-        'const name = async ({}) => {};',
       );
     });
 
