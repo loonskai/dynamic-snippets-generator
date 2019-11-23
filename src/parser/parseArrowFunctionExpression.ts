@@ -15,7 +15,6 @@ const parseArrowFunctionExpression = (
   const params = isObjectPattern
     ? [getASTNode.objectPattern(list)]
     : list.map(getASTNode.identifier);
-  const id = name ? getASTNode.identifier(name) : null;
 
   return name
     ? {
@@ -25,25 +24,21 @@ const parseArrowFunctionExpression = (
           {
             type: ExpressionTypes.VARIABLE_DECLARATOR,
             id: getASTNode.identifier(name),
-            init: {
-              type: ExpressionTypes.ARROW_FUNCTION_EXPRESSION,
-              async,
+            init: getASTNode.arrowFunctionExpression({
+              id: getASTNode.identifier(name),
               params,
-              id,
-              body: getASTNode.blockStatement(),
-            },
+              async,
+            }),
           },
         ],
       }
     : {
         type: ExpressionTypes.EXPRESSION_STATEMENT,
-        expression: {
-          type: ExpressionTypes.ARROW_FUNCTION_EXPRESSION,
-          async,
+        expression: getASTNode.arrowFunctionExpression({
+          id: null,
           params,
-          id,
-          body: getASTNode.blockStatement(),
-        },
+          async,
+        }),
       };
 };
 

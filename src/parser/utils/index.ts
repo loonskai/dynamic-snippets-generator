@@ -111,3 +111,13 @@ export const parseArrowFuncAbbreviationNodes = (
   name = name || '';
   return { name, async, functionParams };
 };
+
+export const parseExportAbbreviationNodes = (
+  abbreviation: string,
+): {
+  name: string;
+} => {
+  const nodes = abbreviation.split(':');
+  const name = nodes.pop() || '';
+  return { name };
+};

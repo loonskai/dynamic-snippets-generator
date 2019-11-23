@@ -45,3 +45,47 @@ export const blockStatement = (): BlockStatement => ({
   type: ExpressionTypes.BLOCK_STATEMENT,
   body: [],
 });
+
+export const arrowFunctionExpression = ({
+  id,
+  params,
+  async,
+}: {
+  id: Identifier | null;
+  params: Array<ObjectPattern | Identifier>;
+  async: boolean;
+}): ArrowFunctionExpression => ({
+  type: ExpressionTypes.ARROW_FUNCTION_EXPRESSION,
+  id,
+  params,
+  async,
+  body: blockStatement(),
+});
+
+export const assignmentExpression = ({
+  left,
+  right,
+}: {
+  left: any;
+  right: any;
+}): AssignmentExpression => ({
+  type: ExpressionTypes.ASSIGNMENT_EXPRESSION,
+  operator: '=',
+  left,
+  right,
+});
+
+export const memberExpression = ({
+  object,
+  property,
+  computed = false,
+}: {
+  object: string;
+  property: string;
+  computed?: boolean;
+}): MemberExpression => ({
+  type: ExpressionTypes.MEMBER_EXPRESSION,
+  object: identifier(object),
+  property: identifier(property),
+  computed,
+});

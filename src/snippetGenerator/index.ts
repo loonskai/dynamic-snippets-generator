@@ -1,9 +1,9 @@
 import _require from './require';
-import identifiers from '../constants/identifiers';
+import abbreviationIDs from '../constants/abbreviationIDs';
 
-const generate = (identifier: string, code: string): string | null => {
-  switch (identifier) {
-    case identifiers.RQR:
+const generate = (abbreviationIDs: string, code: string): string | null => {
+  switch (abbreviationIDs) {
+    case abbreviationIDs.RQR:
       return _require(code);
     default:
       return null;

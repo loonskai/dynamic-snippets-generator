@@ -93,8 +93,34 @@ interface BlockStatement {
   body: Array<any>;
 }
 
+interface ExportNamedDeclaration {
+  type: 'ExportNamedDeclaration';
+  declaration: VariableDeclaration<any>;
+}
+
+interface ExportDefaultDeclaration {
+  type: 'ExportDefaultDeclaration';
+  declaration: Identifier;
+}
+
+interface AssignmentExpression {
+  type: 'AssignmentExpression';
+  operator: '=';
+  left: MemberExpression | Identifier;
+  right: Identifier;
+}
+
+interface MemberExpression {
+  type: 'MemberExpression';
+  computed: boolean;
+  object: Identifier;
+  property: Identifier;
+}
+
 type AnyNode =
   | VariableDeclaration<any>
   | ImportDeclaration
   | FunctionExpression
-  | ArrowFunctionExpression;
+  | ExpressionStatement<any>
+  | ExportNamedDeclaration
+  | ExportDefaultDeclaration;

@@ -14,6 +14,10 @@ enum ExpressionTypes {
   BLOCK_STATEMENT = 'BlockStatement',
   ARROW_FUNCTION_EXPRESSION = 'ArrowFunctionExpression',
   EXPRESSION_STATEMENT = 'ExpressionStatement',
+  EXPORT_NAMED_DECLARATION = 'ExportNamedDeclaration',
+  EXPORT_DEFAULT_DECLARATION = 'ExportDefaultDeclaration',
+  ASSIGNMENT_EXPRESSION = 'AssignmentExpression',
+  MEMBER_EXPRESSION = 'MemberExpression',
 }
 
 export default ExpressionTypes;
