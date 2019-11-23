@@ -22,12 +22,11 @@ const _functionDeclaration = (rawCodeStr: string): string => {
     FunctionDeclaration(path) {
       if (changed) return;
       const { id, params } = path.node;
-
       const initialName = (id && id.name) || '';
+
       const newId = generateNode.identifier(
         getNamedPlaceholder(count, initialName),
       );
-
       const newParams: any = params.map(param => {
         if (t.isIdentifier(param)) {
           increaseCount();
@@ -53,15 +52,13 @@ const _functionDeclaration = (rawCodeStr: string): string => {
 
       increaseCount();
       const block = generateBlockWithPlaceholder(count);
-
       const newFunctionDeclaration: any = t.functionDeclaration(
         newId,
         newParams,
         block,
       );
-      path.replaceWith(newFunctionDeclaration);
-
       changed = true;
+      path.replaceWith(newFunctionDeclaration);
     },
   });
 
@@ -69,7 +66,6 @@ const _functionDeclaration = (rawCodeStr: string): string => {
     retainLines: true,
     quotes: 'single',
   });
-
   return code.replace(';', '');
 };
 

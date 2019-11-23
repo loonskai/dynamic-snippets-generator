@@ -75,8 +75,8 @@ interface BaseFunstionExpression {
   body: BlockStatement;
 }
 
-interface FunctionExpression extends BaseFunstionExpression {
-  type: 'FunctionExpression';
+interface FunctionDeclaration extends BaseFunstionExpression {
+  type: 'FunctionDeclaration';
 }
 
 interface ArrowFunctionExpression extends BaseFunstionExpression {
@@ -120,7 +120,7 @@ interface MemberExpression {
 type AnyNode =
   | VariableDeclaration<any>
   | ImportDeclaration
-  | FunctionExpression
+  | FunctionDeclaration
   | ExpressionStatement<any>
   | ExportNamedDeclaration
   | ExportDefaultDeclaration;

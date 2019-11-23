@@ -2,9 +2,9 @@ import NodeTypes from '../constants/nodeTypes';
 import { parseFuncAbbreviationNodes } from './utils';
 import * as getASTNode from './utils/getASTNode';
 
-const parseFunctionExpression = (
+const parseFunctionDeclaration = (
   abbreviationNodes: string,
-): FunctionExpression => {
+): FunctionDeclaration => {
   const { name, async, functionParams } = parseFuncAbbreviationNodes(
     abbreviationNodes,
   );
@@ -12,14 +12,13 @@ const parseFunctionExpression = (
   const params = isObjectPattern
     ? [getASTNode.objectPattern(list)]
     : list.map(getASTNode.identifier);
-  const id = name ? getASTNode.identifier(name) : null;
   return {
-    type: NodeTypes.FUNCTION_EXPRESSION,
-    id,
+    type: NodeTypes.FUNCTION_DECLARATION,
+    id: getASTNode.identifier(name),
     async,
     params,
     body: getASTNode.blockStatement(),
   };
 };
 
-export default parseFunctionExpression;
+export default parseFunctionDeclaration;

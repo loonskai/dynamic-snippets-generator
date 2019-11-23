@@ -1,9 +1,9 @@
 import generate from 'babel-generator';
-import parseRequire from './parseRequire';
-import parseES6Import from './parseES6Import';
-import parseFunctionExpression from './parseFunctionExpression';
-import parseArrowFunctionExpression from './parseArrowFunctionExpression';
-import parseExport from './parseExport';
+import parseRequire from './require';
+import parseES6Import from './import';
+import parseFunctionDeclaration from './functionDeclaration';
+import parseArrowFunctionExpression from './arrowFunctionExpression';
+import parseExport from './export';
 import checkCornerCases from './utils/checkCornerCases';
 
 const parse = (
@@ -23,8 +23,8 @@ export const _require = (abbreviation: string) =>
   parse(abbreviation, parseRequire);
 export const _import = (abbreviation: string) =>
   checkCornerCases(parse(abbreviation, parseES6Import));
-export const _functionExpression = (abbreviation: string) =>
-  parse(abbreviation, parseFunctionExpression);
+export const _functionDeclaration = (abbreviation: string) =>
+  parse(abbreviation, parseFunctionDeclaration);
 export const _arrowFunction = (abbreviation: string) =>
   parse(abbreviation, parseArrowFunctionExpression);
 export const _export = (abbreviation: string) =>

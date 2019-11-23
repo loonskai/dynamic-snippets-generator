@@ -10,7 +10,7 @@ enum NodeTypes {
   IMPORT_DEFAULT_SPECIFIER = 'ImportDefaultSpecifier',
   IMPORT_SPECIFIER = 'ImportSpecifier',
   IMPORT_NAMESPACE_SPECIFIER = 'ImportNamespaceSpecifier',
-  FUNCTION_EXPRESSION = 'FunctionExpression',
+  FUNCTION_DECLARATION = 'FunctionDeclaration',
   BLOCK_STATEMENT = 'BlockStatement',
   ARROW_FUNCTION_EXPRESSION = 'ArrowFunctionExpression',
   EXPRESSION_STATEMENT = 'ExpressionStatement',
