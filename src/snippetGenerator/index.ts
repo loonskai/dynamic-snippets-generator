@@ -1,9 +1,9 @@
 import _require from './require';
 import _import from './import';
-import _functionExpression from './functionExpression';
+import _functionDeclaration from './functionDeclaration';
 
 export default {
   require: _require,
   import: _import,
-  functionExpression: _functionExpression,
+  functionDeclaration: _functionDeclaration,
 };
