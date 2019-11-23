@@ -19,7 +19,7 @@ describe('require statement', () => {
     );
   });
 
-  it('require with 1 object properties', () => {
+  it('require with 1 object property', () => {
     expect(generate.require("const { a } = require('package');")).toEqual(
       "const { ${1:a} } = require('${2:package}');",
     );
