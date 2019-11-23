@@ -4,9 +4,7 @@ import * as getASTNode from './utils/getASTNode';
 
 const parseArrowFunctionExpression = (
   abbreviationNodes: string,
-):
-  | VariableDeclaration<ArrowFunctionExpression>
-  | ExpressionStatement<ArrowFunctionExpression> => {
+): VariableDeclaration<ArrowFunctionExpression> => {
   const { name, async, functionParams } = parseArrowFuncAbbreviationNodes(
     abbreviationNodes.replace('=>', ''),
   );
@@ -16,30 +14,21 @@ const parseArrowFunctionExpression = (
     ? [getASTNode.objectPattern(list)]
     : list.map(getASTNode.identifier);
 
-  return name
-    ? {
-        type: NodeTypes.VARIABLE_DECLARATION,
-        kind: 'const',
-        declarations: [
-          {
-            type: NodeTypes.VARIABLE_DECLARATOR,
-            id: getASTNode.identifier(name),
-            init: getASTNode.arrowFunctionExpression({
-              id: getASTNode.identifier(name),
-              params,
-              async,
-            }),
-          },
-        ],
-      }
-    : {
-        type: NodeTypes.EXPRESSION_STATEMENT,
-        expression: getASTNode.arrowFunctionExpression({
-          id: null,
+  return {
+    type: NodeTypes.VARIABLE_DECLARATION,
+    kind: 'const',
+    declarations: [
+      {
+        type: NodeTypes.VARIABLE_DECLARATOR,
+        id: getASTNode.identifier(name),
+        init: getASTNode.arrowFunctionExpression({
+          id: getASTNode.identifier(name),
           params,
           async,
         }),
-      };
+      },
+    ],
+  };
 };
 
 export default parseArrowFunctionExpression;
