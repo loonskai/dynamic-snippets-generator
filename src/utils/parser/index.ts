@@ -1,3 +1,11 @@
+const checkAbbreviation = {
+  isIdentifiersList: (abbreviation: string): boolean =>
+    /^[/\w]+:.*[^:]$/.test(abbreviation),
+  isObjectPattern: (abbreviation: string): boolean =>
+    /^[/\w]+:.*:$/.test(abbreviation),
+  isAsync: (abbreviation: string): boolean => /^a\/.*/.test(abbreviation),
+};
+
 export const parseObjectDestructuringProps = (str?: string): string[] => {
   if (!str) return [];
   return str.indexOf(',') ? str.split(',') : [str];
@@ -83,14 +91,6 @@ export const parseFuncAbbreviationNodes = (
   return { name, async, functionParams };
 };
 
-const checkAbbreviation = {
-  isIdentifiersList: (abbreviation: string): boolean =>
-    /^[/\w]+:.*[^:]$/.test(abbreviation),
-  isObjectPattern: (abbreviation: string): boolean =>
-    /^[/\w]+:.*:$/.test(abbreviation),
-  isAsync: (abbreviation: string): boolean => /^a\/.*/.test(abbreviation),
-};
-
 export const parseArrowFuncAbbreviationNodes = (
   nodesString: string,
 ): {
@@ -98,46 +98,18 @@ export const parseArrowFuncAbbreviationNodes = (
   async: boolean;
   functionParams: FunctionParams;
 } => {
-  if (checkAbbreviation.isIdentifiersList(nodesString)) {
-    let [name, paramsStr] = nodesString.split(':');
-    const list = parseObjectDestructuringProps(paramsStr);
-    const async = checkAbbreviation.isAsync(name);
-    name = async ? name.replace('a/', '') : name;
-
-    return {
-      name,
-      async,
-      functionParams: {
-        isObjectPattern: false,
-        list,
-      },
-    };
-  }
-
-  if (checkAbbreviation.isObjectPattern(nodesString)) {
-    let [name, paramsStr] = nodesString.split(':');
-    const list = parseObjectDestructuringProps(paramsStr);
-    const async = checkAbbreviation.isAsync(name);
-    name = async ? name.replace('a/', '') : name;
-
-    return {
-      name,
-      async,
-      functionParams: {
-        isObjectPattern: true,
-        list,
-      },
-    };
-  }
-
+  let [name, paramsStr] = nodesString.split(':');
   const async = checkAbbreviation.isAsync(nodesString);
-  const name = async ? nodesString.replace('a/', '') : nodesString;
+  const list = parseObjectDestructuringProps(paramsStr);
+  const isObjectPattern = checkAbbreviation.isObjectPattern(nodesString);
+  name = async ? name.replace('a/', '') : name;
+
   return {
     name,
     async,
     functionParams: {
-      isObjectPattern: false,
-      list: [],
+      isObjectPattern,
+      list,
     },
   };
 };
