@@ -5,6 +5,7 @@ import {
   ImportDefaultSpecifier,
   ImportNamespaceSpecifier,
   StringLiteral,
+  VariableDeclaration,
 } from 'babel-types';
 
 export const identifier = (value: string): Identifier => t.identifier(value);
@@ -31,3 +32,9 @@ export const importNamespaceSpecifier = (
 
 export const stringLiteral = (value: string): StringLiteral =>
   t.stringLiteral(value);
+
+export const constVariableDeclaration = (
+  id: Identifier,
+  init: Identifier,
+): VariableDeclaration =>
+  t.variableDeclaration('const', [t.variableDeclarator(id, init)]);

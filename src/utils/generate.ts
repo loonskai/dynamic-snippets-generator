@@ -6,5 +6,4 @@ export default (ast: any, postProcessing?: (code: string) => string) => {
     quotes: 'single',
   });
   return postProcessing ? postProcessing(code) : code;
-  //  code.replace(';', '');
 };

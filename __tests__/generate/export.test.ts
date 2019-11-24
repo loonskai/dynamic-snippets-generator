@@ -3,7 +3,7 @@ import generate from '../../src/generator';
 describe('es6 export statements', () => {
   it('es6 named export', () => {
     expect(generate.export('export const name = name;')).toEqual(
-      'export const ${1:name} = ${2:name}',
+      'export const ${1:name} = $2',
     );
   });
 
