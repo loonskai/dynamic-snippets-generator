@@ -9,38 +9,34 @@ import {
   isPlaceholder,
 } from '../utils/generator';
 import * as generateNode from '../utils/generator/generateNode';
+import Counter from '../utils/generator/counter';
 
 const _require = (rawCodeStr: string): string => {
   const ast = parser.parse(rawCodeStr);
+  const counter = new Counter();
 
-  let count = 1;
-  const increaseCount = () => (count += 1);
-
-  const modifyProperty = (property: any, count: any) => {
+  const modifyProperty = (property: any, counter: Counter) => {
     let updatedProp;
     if (!property) {
-      updatedProp = t.identifier(getPlaceholder(count));
+      updatedProp = t.identifier(getPlaceholder(counter.value));
     } else {
       const { key: { name } = { name: null } } = property;
-      updatedProp = t.identifier(getNamedPlaceholder(count, name));
+      updatedProp = t.identifier(getNamedPlaceholder(counter.value, name));
     }
     return t.objectProperty(updatedProp, updatedProp, false, true);
   };
 
   const modifyIdentifier = (node: any) => {
-    node.name = getNamedPlaceholder(count, node.name);
-    increaseCount();
+    node.name = getNamedPlaceholder(counter.value, node.name);
   };
 
   const modifyObjectPattern = (node: any) => {
     const { properties } = node;
     if (properties.length === 0) {
-      node.properties = [modifyProperty(null, count)];
-      increaseCount();
+      node.properties = [modifyProperty(null, counter)];
     } else {
       node.properties = properties.map((prop: any) => {
-        const updatedProp = modifyProperty(prop, count);
-        increaseCount();
+        const updatedProp = modifyProperty(prop, counter);
         return updatedProp;
       });
     }
@@ -56,10 +52,9 @@ const _require = (rawCodeStr: string): string => {
       const initialName = path.node.value;
       if (isPlaceholder(initialName)) return;
 
-      const newName = getNamedPlaceholder(count, initialName);
+      const newName = getNamedPlaceholder(counter.value, initialName);
       const newStringLiteral = generateNode.stringLiteral(newName);
       path.replaceWith(newStringLiteral as any);
-      increaseCount();
     },
   });
 

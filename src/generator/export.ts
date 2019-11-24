@@ -25,6 +25,7 @@ const _export = (rawCodeStr: string): string => {
         'declaration',
         generateNode.constVariableDeclaration(newId, newInit) as any,
       );
+      counter.reset();
       removeSemicolons = true;
     },
     ExportDefaultDeclaration(path) {
@@ -37,6 +38,7 @@ const _export = (rawCodeStr: string): string => {
           getNamedPlaceholder(counter.value, initName),
         ) as any,
       );
+      counter.reset();
     },
     AssignmentExpression(path) {
       removeSemicolons = false;
@@ -47,6 +49,7 @@ const _export = (rawCodeStr: string): string => {
           getNamedPlaceholder(counter.value, initName),
         ) as any,
       );
+      counter.reset();
     },
   });
 

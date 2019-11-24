@@ -9,6 +9,10 @@ class Counter {
     this._value += 1;
     return oldValue;
   }
+
+  reset() {
+    this._value = 1;
+  }
 }
 
 export default Counter;
