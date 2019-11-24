@@ -1,11 +1,11 @@
 import NodeTypes from '../constants/nodeTypes';
-import { parseFuncAbbreviationNodes } from '../utils/parser';
+import { parseFunctionAbbreviation } from '../utils/parser';
 import * as getASTNode from '../utils/parser/getASTNode';
 
 const parseFunctionDeclaration = (
   abbreviationNodes: string,
 ): FunctionDeclaration => {
-  const { name, async, functionParams } = parseFuncAbbreviationNodes(
+  const { name, async, functionParams } = parseFunctionAbbreviation(
     abbreviationNodes.replace('>', ''),
   );
   const { isObjectPattern, list } = functionParams;

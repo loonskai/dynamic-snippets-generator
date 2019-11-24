@@ -11,10 +11,6 @@ describe('import statement', () => {
     );
   });
 
-  it(':>package', () => {
-    expect(_import(':>package')).toEqual("import {} from 'package';");
-  });
-
   it(':obj>package', () => {
     expect(_import(':obj>package')).toEqual("import { obj } from 'package';");
   });

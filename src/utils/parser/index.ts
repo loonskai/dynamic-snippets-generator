@@ -6,58 +6,31 @@ const checkAbbreviation = {
   isAsync: (abbreviation: string): boolean => /^a\/.*/.test(abbreviation),
 };
 
-export const parseObjectDestructuringProps = (str?: string): string[] => {
+const parseObjectDestructuringProps = (str?: string): string[] => {
   if (!str) return [];
   return str.indexOf(',') ? str.split(',') : [str];
 };
 
-export const parseFunctionParams = (str: string = ''): FunctionParams => ({
-  isObjectPattern: /^:.*:$/.test(str),
-  list: parseObjectDestructuringProps(str.replace(/:/g, '')),
-});
-
-export const parseAbbreviationNodes = (
-  abbreviationNodes: string,
+export const parseImportAbbreviation = (
+  nodesString: string,
 ): {
   name: string;
   customName?: string;
   objectProperties?: string[];
   alias?: string;
 } => {
-  let name;
-  let customName;
-  let objectProperties;
-  let alias;
+  const [_, flag, nodes] = nodesString.match(/^([\*>:])(.+)/);
+  const nodesArray = nodes.split('>');
+  const name = nodesArray.pop() || '';
+  const customName = flag === '>' ? nodesArray.pop() : undefined;
+  const objectProperties =
+    flag === ':' ? parseObjectDestructuringProps(nodesArray.pop()) : undefined;
+  const alias = flag === '*' ? nodesArray.pop() : undefined;
 
-  for (let i = 0; i < abbreviationNodes.length && !name; i += 1) {
-    switch (abbreviationNodes[i]) {
-      case '>': {
-        const nodes = abbreviationNodes.split('>');
-        name = nodes.pop();
-        if (nodes.length > 1) {
-          customName = nodes.pop();
-        }
-        break;
-      }
-      case ':': {
-        const nodes = abbreviationNodes.split(':');
-        name = nodes.pop();
-        objectProperties = parseObjectDestructuringProps(nodes.pop());
-        break;
-      }
-      case '*': {
-        const nodes = abbreviationNodes.split(/[>*]/);
-        name = nodes.pop();
-        alias = nodes.pop();
-      }
-    }
-  }
-
-  name = name || '';
   return { name, customName, objectProperties, alias };
 };
 
-export const parseFuncAbbreviationNodes = (
+export const parseFunctionAbbreviation = (
   nodesString: string,
 ): {
   name: string;
@@ -80,7 +53,7 @@ export const parseFuncAbbreviationNodes = (
   };
 };
 
-export const parseExportAbbreviationNodes = (
+export const parseExportAbbreviation = (
   abbreviation: string,
 ): {
   name: string;

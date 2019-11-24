@@ -1,5 +1,5 @@
 import NodeTypes from '../constants/nodeTypes';
-import { parseExportAbbreviationNodes } from '../utils/parser';
+import { parseExportAbbreviation } from '../utils/parser';
 import * as getASTNode from '../utils/parser/getASTNode';
 
 interface Options {
@@ -15,7 +15,7 @@ const parseExport = (
   | ExportDefaultDeclaration
   | ExpressionStatement<AssignmentExpression> => {
   const { es6, isDefault } = options;
-  const { name } = parseExportAbbreviationNodes(abbreviationNodes);
+  const { name } = parseExportAbbreviation(abbreviationNodes);
   if (!es6)
     return {
       type: NodeTypes.EXPRESSION_STATEMENT,

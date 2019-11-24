@@ -5,7 +5,6 @@ import parseArrowFunctionExpression from './arrowFunctionExpression';
 import parseExport from './export';
 
 import generate from '../utils/generate';
-import checkCornerCases from '../utils/parser/checkCornerCases';
 
 const parse = (
   abbreviation: string,
@@ -16,7 +15,7 @@ const parse = (
 export const _require = (abbreviation: string) =>
   parse(abbreviation, parseRequire);
 export const _import = (abbreviation: string) =>
-  checkCornerCases(parse(abbreviation, parseES6Import));
+  parse(abbreviation, parseES6Import);
 export const _functionDeclaration = (abbreviation: string) =>
   parse(abbreviation, parseFunctionDeclaration);
 export const _arrowFunctionExpression = (abbreviation: string) =>

@@ -1,9 +1,9 @@
 import NodeTypes from '../constants/nodeTypes';
-import { parseAbbreviationNodes } from '../utils/parser';
+import { parseImportAbbreviation } from '../utils/parser';
 import * as getASTNode from '../utils/parser/getASTNode';
 
 const parseES6Import = (abbreviationNodes: string): ImportDeclaration => {
-  const { name, customName, objectProperties, alias } = parseAbbreviationNodes(
+  const { name, customName, objectProperties, alias } = parseImportAbbreviation(
     abbreviationNodes,
   );
 

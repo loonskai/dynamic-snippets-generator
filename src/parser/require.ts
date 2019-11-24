@@ -1,11 +1,11 @@
 import NodeTypes from '../constants/nodeTypes';
-import { parseAbbreviationNodes } from '../utils/parser';
+import { parseImportAbbreviation } from '../utils/parser';
 import * as getASTNode from '../utils/parser/getASTNode';
 
 const parseRequire = (
   abbreviationNodes: string,
 ): VariableDeclaration<CallExpression> => {
-  const { name, customName, objectProperties } = parseAbbreviationNodes(
+  const { name, customName, objectProperties } = parseImportAbbreviation(
     abbreviationNodes,
   );
 
