@@ -119,7 +119,7 @@ export const parseExportAbbreviationNodes = (
 ): {
   name: string;
 } => {
-  const nodes = abbreviation.split(':');
+  const nodes = abbreviation.split('>');
   const name = nodes.pop() || '';
   return { name };
 };
