@@ -1,6 +1,6 @@
 import NodeTypes from '../constants/nodeTypes';
-import { parseExportAbbreviationNodes } from './utils';
-import * as getASTNode from './utils/getASTNode';
+import { parseExportAbbreviationNodes } from '../utils/parser';
+import * as getASTNode from '../utils/parser/getASTNode';
 
 interface Options {
   es6: boolean;

@@ -1,4 +1,4 @@
-import generate from '../../src/snippetGenerator';
+import generate from '../../src/generator';
 
 describe('named function declaration', () => {
   it('without parameters', () => {

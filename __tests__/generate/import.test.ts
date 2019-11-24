@@ -1,4 +1,4 @@
-import generate from '../../src/snippetGenerator';
+import generate from '../../src/generator';
 
 describe('import statement', () => {
   it('default import statement', () => {

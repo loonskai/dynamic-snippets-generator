@@ -1,7 +1,7 @@
 import tokenizeAbbreviation from './tokenizeAbbreviation';
 import abbreviationIDs from './constants/abbreviationIDs';
 
-import generate from './snippetGenerator';
+import generate from './generator';
 import * as parse from './parser';
 
 export default (abbreviation: string): string | null => {

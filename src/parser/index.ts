@@ -1,23 +1,17 @@
-import generate from 'babel-generator';
 import parseRequire from './require';
 import parseES6Import from './import';
 import parseFunctionDeclaration from './functionDeclaration';
 import parseArrowFunctionExpression from './arrowFunctionExpression';
 import parseExport from './export';
-import checkCornerCases from './utils/checkCornerCases';
+
+import generate from '../utils/generate';
+import checkCornerCases from '../utils/parser/checkCornerCases';
 
 const parse = (
   abbreviation: string,
   parser: (str: string, options?: any) => AnyNode,
   options?: any,
-): string => {
-  const tree = parser(abbreviation, options);
-  const { code } = generate(tree as any, {
-    retainLines: true,
-    quotes: 'single',
-  });
-  return code;
-};
+): string => generate(parser(abbreviation, options));
 
 export const _require = (abbreviation: string) =>
   parse(abbreviation, parseRequire);

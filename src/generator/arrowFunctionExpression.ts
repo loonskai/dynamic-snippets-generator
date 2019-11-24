@@ -1,15 +1,15 @@
 import traverse from '@babel/traverse';
-import generate from 'babel-generator';
 import * as parser from '@babel/parser';
 import * as t from 'babel-types';
 
+import generate from '../utils/generate';
 import {
   getNamedPlaceholder,
   generateBlockWithPlaceholder,
   bindFunctionParametersMapping,
-} from './utils';
-import * as generateNode from './utils/generateNode';
-import Counter from './utils/counter';
+} from '../utils/generator';
+import * as generateNode from '../utils/generator/generateNode';
+import Counter from '../utils/generator/counter';
 
 const _arrowFunctionExpression = (rawCodeStr: string): string => {
   const ast = parser.parse(rawCodeStr);
@@ -37,11 +37,7 @@ const _arrowFunctionExpression = (rawCodeStr: string): string => {
     },
   });
 
-  const { code } = generate(ast as any, {
-    retainLines: true,
-    quotes: 'single',
-  });
-  return code.replace(';', '');
+  return generate(ast, (code: string) => code.replace(';', ''));
 };
 
 export default _arrowFunctionExpression;

@@ -1,6 +1,6 @@
 import NodeTypes from '../constants/nodeTypes';
-import { parseAbbreviationNodes } from './utils';
-import * as getASTNode from './utils/getASTNode';
+import { parseAbbreviationNodes } from '../utils/parser';
+import * as getASTNode from '../utils/parser/getASTNode';
 
 const parseRequire = (
   abbreviationNodes: string,

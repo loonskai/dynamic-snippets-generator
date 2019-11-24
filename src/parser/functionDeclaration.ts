@@ -1,6 +1,6 @@
 import NodeTypes from '../constants/nodeTypes';
-import { parseFuncAbbreviationNodes } from './utils';
-import * as getASTNode from './utils/getASTNode';
+import { parseFuncAbbreviationNodes } from '../utils/parser';
+import * as getASTNode from '../utils/parser/getASTNode';
 
 const parseFunctionDeclaration = (
   abbreviationNodes: string,

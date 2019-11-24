@@ -1,9 +1,9 @@
 import traverse from '@babel/traverse';
-import generate from 'babel-generator';
 import * as parser from '@babel/parser';
 
-import { getNamedPlaceholder, isPlaceholder } from './utils';
-import * as generateNode from './utils/generateNode';
+import generate from '../utils/generate';
+import { getNamedPlaceholder, isPlaceholder } from '../utils/generator';
+import * as generateNode from '../utils/generator/generateNode';
 
 const _import = (rawCodeStr: string): string => {
   const ast = parser.parse(rawCodeStr, {
@@ -64,11 +64,7 @@ const _import = (rawCodeStr: string): string => {
     },
   });
 
-  const { code } = generate(ast as any, {
-    retainLines: true,
-    quotes: 'single',
-  });
-  return code;
+  return generate(ast);
 };
 
 export default _import;
