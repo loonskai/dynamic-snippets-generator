@@ -19,7 +19,7 @@ export const _import = (abbreviation: string) =>
   checkCornerCases(parse(abbreviation, parseES6Import));
 export const _functionDeclaration = (abbreviation: string) =>
   parse(abbreviation, parseFunctionDeclaration);
-export const _arrowFunction = (abbreviation: string) =>
+export const _arrowFunctionExpression = (abbreviation: string) =>
   parse(abbreviation, parseArrowFunctionExpression);
 export const _export = (abbreviation: string) =>
   parse(abbreviation, parseExport, { isDefault: false, es6: true });

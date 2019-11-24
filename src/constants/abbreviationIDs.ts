@@ -1,10 +1,10 @@
 enum AbbreviationIDs {
-  RQR = 'rqr',
-  IMP = 'imp',
+  RQR = 'r',
+  IMP = 'i',
   F = 'f',
-  EX = 'ex',
-  EXD = 'exd',
-  MEXP = 'mexp',
+  EX = 'e',
+  EXD = 'ed',
+  MEXP = 'me',
 }
 
 export default AbbreviationIDs;
