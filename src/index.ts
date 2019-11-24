@@ -26,9 +26,9 @@ export default (abbreviation: string): string | null => {
     case abbreviationIDs.EX:
       return generate.export(parse._export(abbreviationNodes));
     case abbreviationIDs.EXD:
-      return generate.export(parse._export(abbreviationNodes));
+      return generate.export(parse._exportDefault(abbreviationNodes));
     case abbreviationIDs.MEXP:
-      return generate.export(parse._export(abbreviationNodes));
+      return generate.export(parse._moduleExports(abbreviationNodes));
     default:
       return null;
   }
