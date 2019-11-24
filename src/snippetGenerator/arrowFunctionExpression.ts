@@ -3,52 +3,35 @@ import generate from 'babel-generator';
 import * as parser from '@babel/parser';
 import * as t from 'babel-types';
 
-import { getNamedPlaceholder, generateBlockWithPlaceholder } from './utils';
+import {
+  getNamedPlaceholder,
+  generateBlockWithPlaceholder,
+  bindFunctionParametersMapping,
+} from './utils';
 import * as generateNode from './utils/generateNode';
+import Counter from './utils/counter';
 
 const _arrowFunctionExpression = (rawCodeStr: string): string => {
   const ast = parser.parse(rawCodeStr);
-
-  let count = 1;
+  const counter = new Counter();
   let changed = false;
-  const increaseCount = () => (count += 1);
 
   traverse(ast, {
     ArrowFunctionExpression(path) {
       if (changed) return;
-      const parentNode = path.parentPath.node as any;
-      const { name } = parentNode.id;
-      const newId = t.identifier(getNamedPlaceholder(count, name));
-      const { async } = path.node;
+      const { async, params } = path.node;
+      const {
+        id: { name: initName },
+      } = path.parentPath.node as any;
 
-      const newParams = path.node.params.map(param => {
-        if (t.isIdentifier(param)) {
-          increaseCount();
-          return generateNode.identifier(
-            getNamedPlaceholder(count, param.name),
-          );
-        }
-        if (t.isObjectPattern(param)) {
-          const { properties } = param;
-          const newProperties: any = properties.map((prop: any) => {
-            increaseCount();
-            const key = generateNode.identifier(
-              getNamedPlaceholder(count, prop.key.name),
-            );
-            const value = generateNode.identifier(
-              getNamedPlaceholder(count, prop.value.name),
-            );
-            return t.objectProperty(key, value, false, true);
-          });
-          return t.objectPattern(newProperties);
-        }
-      }) as any;
-
-      increaseCount();
-      const body = generateBlockWithPlaceholder(count);
+      const newId = generateNode.identifier(
+        getNamedPlaceholder(counter.value, initName),
+      );
+      const newParams: any = params.map(bindFunctionParametersMapping(counter));
+      const body = generateBlockWithPlaceholder(counter.value);
       const newInit = t.arrowFunctionExpression(newParams, body, async);
-
       const newVariableDeclarator = t.variableDeclarator(newId, newInit) as any;
+
       changed = true;
       path.parentPath.replaceWith(newVariableDeclarator);
     },

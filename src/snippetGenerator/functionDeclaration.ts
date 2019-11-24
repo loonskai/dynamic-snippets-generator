@@ -3,15 +3,18 @@ import generate from 'babel-generator';
 import * as parser from '@babel/parser';
 import * as t from 'babel-types';
 
-import { getNamedPlaceholder, generateBlockWithPlaceholder } from './utils';
+import {
+  getNamedPlaceholder,
+  generateBlockWithPlaceholder,
+  bindFunctionParametersMapping,
+} from './utils';
 import * as generateNode from './utils/generateNode';
+import Counter from './utils/counter';
 
 const _functionDeclaration = (rawCodeStr: string): string => {
   const ast = parser.parse(rawCodeStr);
-
+  const counter = new Counter();
   let changed = false;
-  let count = 1;
-  const increaseCount = () => (count += 1);
 
   traverse(ast, {
     FunctionDeclaration(path) {
@@ -20,38 +23,16 @@ const _functionDeclaration = (rawCodeStr: string): string => {
       const initialName = (id && id.name) || '';
 
       const newId = generateNode.identifier(
-        getNamedPlaceholder(count, initialName),
+        getNamedPlaceholder(counter.value, initialName),
       );
-      const newParams: any = params.map(param => {
-        if (t.isIdentifier(param)) {
-          increaseCount();
-          return generateNode.identifier(
-            getNamedPlaceholder(count, param.name),
-          );
-        }
-        if (t.isObjectPattern(param)) {
-          const { properties } = param;
-          const newProperties: any = properties.map((prop: any) => {
-            increaseCount();
-            const key = generateNode.identifier(
-              getNamedPlaceholder(count, prop.key.name),
-            );
-            const value = generateNode.identifier(
-              getNamedPlaceholder(count, prop.value.name),
-            );
-            return t.objectProperty(key, value, false, true);
-          });
-          return t.objectPattern(newProperties);
-        }
-      });
-
-      increaseCount();
-      const body = generateBlockWithPlaceholder(count);
+      const newParams: any = params.map(bindFunctionParametersMapping(counter));
+      const body = generateBlockWithPlaceholder(counter.value);
       const newFunctionDeclaration: any = t.functionDeclaration(
         newId,
         newParams,
         body,
       );
+
       changed = true;
       path.replaceWith(newFunctionDeclaration);
     },
