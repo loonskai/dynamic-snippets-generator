@@ -3,13 +3,8 @@ import generate from 'babel-generator';
 import * as parser from '@babel/parser';
 import * as t from 'babel-types';
 
-import { getPlaceholder, getNamedPlaceholder } from './utils';
+import { getNamedPlaceholder, generateBlockWithPlaceholder } from './utils';
 import * as generateNode from './utils/generateNode';
-
-const generateBlockWithPlaceholder = (count: number): t.BlockStatement =>
-  t.blockStatement([
-    t.expressionStatement(t.identifier(getPlaceholder(count))),
-  ]);
 
 const _functionDeclaration = (rawCodeStr: string): string => {
   const ast = parser.parse(rawCodeStr);
@@ -51,11 +46,11 @@ const _functionDeclaration = (rawCodeStr: string): string => {
       });
 
       increaseCount();
-      const block = generateBlockWithPlaceholder(count);
+      const body = generateBlockWithPlaceholder(count);
       const newFunctionDeclaration: any = t.functionDeclaration(
         newId,
         newParams,
-        block,
+        body,
       );
       changed = true;
       path.replaceWith(newFunctionDeclaration);
