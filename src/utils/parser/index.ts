@@ -83,33 +83,63 @@ export const parseFuncAbbreviationNodes = (
   return { name, async, functionParams };
 };
 
+const checkAbbreviation = {
+  isIdentifiersList: (abbreviation: string): boolean =>
+    /^[/\w]+:.*[^:]$/.test(abbreviation),
+  isObjectPattern: (abbreviation: string): boolean =>
+    /^[/\w]+:.*:$/.test(abbreviation),
+  isAsync: (abbreviation: string): boolean => /^a\/.*/.test(abbreviation),
+};
+
 export const parseArrowFuncAbbreviationNodes = (
-  abbreviationNodes: string,
+  nodesString: string,
 ): {
   name: string;
   async: boolean;
   functionParams: FunctionParams;
 } => {
-  let nodesString = abbreviationNodes.split('=>')[0];
-  let name;
-  let async = false;
-  let functionParams: FunctionParams = {
-    isObjectPattern: false,
-    list: [],
-  };
+  if (checkAbbreviation.isIdentifiersList(nodesString)) {
+    let [name, paramsStr] = nodesString.split(':');
+    const list = parseObjectDestructuringProps(paramsStr);
+    const async = checkAbbreviation.isAsync(name);
+    name = async ? name.replace('a/', '') : name;
 
-  const asyncRe = /a\//;
-  if (asyncRe.test(nodesString)) {
-    async = true;
-    nodesString = nodesString.replace(asyncRe, '');
+    return {
+      name,
+      async,
+      functionParams: {
+        isObjectPattern: false,
+        list,
+      },
+    };
   }
-  const nodes = nodesString.split('>');
-  const paramsString = nodes.pop();
-  name = nodes.pop();
-  functionParams = parseFunctionParams(paramsString);
 
-  name = name || '';
-  return { name, async, functionParams };
+  if (checkAbbreviation.isObjectPattern(nodesString)) {
+    let [name, paramsStr] = nodesString.split(':');
+    const list = parseObjectDestructuringProps(paramsStr);
+    const async = checkAbbreviation.isAsync(name);
+    name = async ? name.replace('a/', '') : name;
+
+    return {
+      name,
+      async,
+      functionParams: {
+        isObjectPattern: true,
+        list,
+      },
+    };
+  }
+
+  const async = checkAbbreviation.isAsync(nodesString);
+  const name = async ? nodesString.replace('a/', '') : nodesString;
+  return {
+    name,
+    async,
+    functionParams: {
+      isObjectPattern: false,
+      list: [],
+    },
+  };
 };
 
 export const parseExportAbbreviationNodes = (

@@ -8,7 +8,6 @@ const parseArrowFunctionExpression = (
   const { name, async, functionParams } = parseArrowFuncAbbreviationNodes(
     abbreviationNodes.replace('=>', ''),
   );
-
   const { isObjectPattern, list } = functionParams;
   const params = isObjectPattern
     ? [getASTNode.objectPattern(list)]
