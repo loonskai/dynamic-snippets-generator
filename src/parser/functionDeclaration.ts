@@ -6,7 +6,7 @@ const parseFunctionDeclaration = (
   abbreviationNodes: string,
 ): FunctionDeclaration => {
   const { name, async, functionParams } = parseFuncAbbreviationNodes(
-    abbreviationNodes,
+    abbreviationNodes.replace('>', ''),
   );
   const { isObjectPattern, list } = functionParams;
   const params = isObjectPattern

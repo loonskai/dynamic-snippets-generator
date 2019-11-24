@@ -1,11 +1,11 @@
 import NodeTypes from '../constants/nodeTypes';
-import { parseArrowFuncAbbreviationNodes } from '../utils/parser';
+import { parseFuncAbbreviationNodes } from '../utils/parser';
 import * as getASTNode from '../utils/parser/getASTNode';
 
 const parseArrowFunctionExpression = (
   abbreviationNodes: string,
 ): VariableDeclaration<ArrowFunctionExpression> => {
-  const { name, async, functionParams } = parseArrowFuncAbbreviationNodes(
+  const { name, async, functionParams } = parseFuncAbbreviationNodes(
     abbreviationNodes.replace('=>', ''),
   );
   const { isObjectPattern, list } = functionParams;

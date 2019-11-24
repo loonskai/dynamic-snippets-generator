@@ -12,7 +12,7 @@ describe('function declaration', () => {
   });
 
   it('>name:param1,param2', () => {
-    expect(_functionDeclaration('>name:param1,param2e')).toEqual(
+    expect(_functionDeclaration('>name:param1,param2')).toEqual(
       'function name(param1, param2) {}',
     );
   });
