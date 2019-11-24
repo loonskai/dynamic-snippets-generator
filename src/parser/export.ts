@@ -41,8 +41,8 @@ const parseExport = (
           declarations: [
             {
               type: NodeTypes.VARIABLE_DECLARATOR,
-              id: getASTNode.identifier('name'),
-              init: getASTNode.identifier('name'),
+              id: getASTNode.identifier(name),
+              init: getASTNode.identifier(name),
             },
           ],
         },
