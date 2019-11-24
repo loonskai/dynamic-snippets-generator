@@ -4,7 +4,7 @@ import abbreviationIDs from './constants/abbreviationIDs';
 import generate from './generator';
 import * as parse from './parser';
 
-export default (abbreviation: string): string | null => {
+export default (abbreviation: string): string => {
   if (abbreviation.indexOf('=>') !== -1)
     return generate.arrowFunctionExpression(
       parse._arrowFunctionExpression(abbreviation),
@@ -30,6 +30,6 @@ export default (abbreviation: string): string | null => {
     case abbreviationIDs.MEXP:
       return generate.export(parse._moduleExports(abbreviationNodes));
     default:
-      return null;
+      return abbreviation;
   }
 };

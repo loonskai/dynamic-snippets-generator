@@ -11,22 +11,22 @@ describe('import statement', () => {
     );
   });
 
-  it('::package', () => {
-    expect(_import('::package')).toEqual("import {} from 'package';");
+  it(':>package', () => {
+    expect(_import(':>package')).toEqual("import {} from 'package';");
   });
 
-  it(':obj:package', () => {
-    expect(_import(':obj:package')).toEqual("import { obj } from 'package';");
+  it(':obj>package', () => {
+    expect(_import(':obj>package')).toEqual("import { obj } from 'package';");
   });
 
-  it(':objA,objB:package', () => {
-    expect(_import(':objA,objB:package')).toEqual(
+  it(':objA,objB>package', () => {
+    expect(_import(':objA,objB>package')).toEqual(
       "import { objA, objB } from 'package';",
     );
   });
 
-  it(':objA,objB,objC:package', () => {
-    expect(_import(':objA,objB,objC:package')).toEqual(
+  it(':objA,objB,objC>package', () => {
+    expect(_import(':objA,objB,objC>package')).toEqual(
       "import { objA, objB, objC } from 'package';",
     );
   });

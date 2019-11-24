@@ -1,5 +1,5 @@
 const tokenizeAbbreviation = (abbreviation: string): string[] => {
-  const re = /[>:]/;
+  const re = /[\>\:\*]/;
   const [abbreviationID] = abbreviation.split(re);
   const idx = abbreviation.search(re);
   const abbreviationNodes = abbreviation.slice(idx);
