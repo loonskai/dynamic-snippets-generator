@@ -1,5 +1,5 @@
 # Dynamic Snippets generator
-Snippet parser for [**VSCode extention**](https://github.com/loonskai/vscode-dynamic-snippets). Inspired by [emmet](https://github.com/emmetio/emmet) abbreviation syntax.
+Snippet parser for [**VSCode extention**](https://github.com/loonskai/dynamic-snippets). Inspired by [emmet](https://github.com/emmetio/emmet) abbreviation syntax.
 
 <p align="center"><img src="assets/logo.jpg" width="200px" /></p>
 
@@ -41,7 +41,7 @@ Below you will find the list of all possible abbreviations
 
 ## Usage
 ```js
-import generateSnippet from 'dynamic-snippets';
+import generateSnippet from 'dynamic-snippets-generator';
 
 generateSnippet('i>example'); // "import ${1:example} from '${2:example}';"
 ```
