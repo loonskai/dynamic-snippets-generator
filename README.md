@@ -1,4 +1,4 @@
-# Dynamic Snippets
+# Dynamic Snippets generator
 Snippet parser for [**VSCode extention**](https://github.com/loonskai/vscode-dynamic-snippets). Inspired by [emmet](https://github.com/emmetio/emmet) abbreviation syntax.
 
 <p align="center"><img src="assets/logo.jpg" width="200px" /></p>
