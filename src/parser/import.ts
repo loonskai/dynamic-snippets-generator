@@ -10,14 +10,12 @@ const parseES6Import = (abbreviationNodes: string): ImportDeclaration => {
   let specifiers = [] as any;
   if (alias) {
     specifiers = [getASTNode.importNamespaceSpecifier(alias)];
-  } else if (objectProperties && !customName) {
-    specifiers = objectProperties.map(getASTNode.importSpecifier)
-  } else if (!objectProperties) {
+  } else if (objectProperties) {
+    const objPropNodes = objectProperties.map(getASTNode.importSpecifier);
+    specifiers = customName ? [getASTNode.importDefaultSpecifier(customName), ...objPropNodes] : objPropNodes
+  } else {
     specifiers = [getASTNode.importDefaultSpecifier(customName || name)]
-  } else if (!alias && customName) {
-    specifiers = [getASTNode.importDefaultSpecifier(customName), ...objectProperties.map(getASTNode.importSpecifier)]
-  } 
-
+  }
 
   return {
     type: NodeTypes.IMPORT_DECLARATION,
