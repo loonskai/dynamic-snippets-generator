@@ -4,6 +4,8 @@ import parseFunctionDeclaration from './functionDeclaration';
 import parseArrowFunctionExpression from './arrowFunctionExpression';
 import parseExport from './export';
 
+import parseReact from './specialCases/react'
+
 import generate from '../utils/generate';
 
 const parse = (
@@ -26,3 +28,7 @@ export const _exportDefault = (abbreviation: string) =>
   parse(abbreviation, parseExport, { isDefault: true, es6: true });
 export const _moduleExports = (abbreviation: string) =>
   parse(abbreviation, parseExport, { isDefault: true, es6: false });
+
+  /* Special cases */
+export const _react = (abbreviation: string) => parseReact(abbreviation)
+// export const _react = (abbreviation: string) => parse(abbreviation, parseReact);
