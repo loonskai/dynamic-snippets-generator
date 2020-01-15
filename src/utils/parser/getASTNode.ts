@@ -10,11 +10,6 @@ export const stringLiteral = (value: string): StringLiteral => ({
   value,
 });
 
-export const objectPattern = (properties: string[]): ObjectPattern => ({
-  type: NodeTypes.OBJECT_PATTERN,
-  properties: properties.map(objectProperty),
-});
-
 export const objectProperty = (name: string): ObjectProperty => ({
   type: NodeTypes.OBJECT_PROPERTY,
   shorthand: true,
@@ -22,9 +17,12 @@ export const objectProperty = (name: string): ObjectProperty => ({
   key: identifier(name),
 });
 
-export const importDefaultSpecifier = (
-  name: string,
-): ImportDefaultSpecifier => ({
+export const objectPattern = (properties: string[]): ObjectPattern => ({
+  type: NodeTypes.OBJECT_PATTERN,
+  properties: properties.map(objectProperty),
+});
+
+export const importDefaultSpecifier = (name: string): ImportDefaultSpecifier => ({
   type: NodeTypes.IMPORT_DEFAULT_SPECIFIER,
   local: identifier(name),
 });
@@ -34,9 +32,7 @@ export const importSpecifier = (name: string): ImportSpecifier => ({
   imported: identifier(name),
 });
 
-export const importNamespaceSpecifier = (
-  alias: string,
-): ImportNamespaceSpecifier => ({
+export const importNamespaceSpecifier = (alias: string): ImportNamespaceSpecifier => ({
   type: NodeTypes.IMPORT_NAMESPACE_SPECIFIER,
   local: identifier(alias),
 });
@@ -55,7 +51,7 @@ export const arrowFunctionExpression = ({
   id: Identifier | null;
   params: Array<ObjectPattern | Identifier>;
   async: boolean;
-  body?: Array<AnyNode>
+  body?: Array<AnyNode>;
 }): ArrowFunctionExpression => {
   const result = {
     type: NodeTypes.ARROW_FUNCTION_EXPRESSION,
@@ -68,16 +64,9 @@ export const arrowFunctionExpression = ({
   }
 
   return result;
-} 
+};
 
-
-export const assignmentExpression = ({
-  left,
-  right,
-}: {
-  left: any;
-  right: any;
-}): AssignmentExpression => ({
+export const assignmentExpression = ({ left, right }: { left: any; right: any }): AssignmentExpression => ({
   type: NodeTypes.ASSIGNMENT_EXPRESSION,
   operator: '=',
   left,
@@ -101,5 +90,5 @@ export const memberExpression = ({
 
 export const returnStatement = (argument: any): ReturnStatement => ({
   type: NodeTypes.RETURN_STATEMENT,
-  argument: argument
+  argument: argument,
 });

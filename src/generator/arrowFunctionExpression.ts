@@ -3,11 +3,7 @@ import * as parser from '@babel/parser';
 import * as t from 'babel-types';
 
 import generate from '../utils/generate';
-import {
-  getNamedPlaceholder,
-  generateBlockWithPlaceholder,
-  bindFunctionParametersMapping,
-} from '../utils/generator';
+import { getNamedPlaceholder, generateBlockWithPlaceholder, bindFunctionParametersMapping } from '../utils/generator';
 import * as generateNode from '../utils/generator/generateNode';
 import Counter from '../utils/generator/counter';
 
@@ -24,9 +20,7 @@ const _arrowFunctionExpression = (rawCodeStr: string): string => {
         id: { name: initName },
       } = path.parentPath.node as any;
 
-      const newId = generateNode.identifier(
-        getNamedPlaceholder(counter.value, initName),
-      );
+      const newId = generateNode.identifier(getNamedPlaceholder(counter.value, initName));
       const newParams: any = params.map(bindFunctionParametersMapping(counter));
       const body = generateBlockWithPlaceholder(counter.value);
       const newInit = t.arrowFunctionExpression(newParams, body, async);

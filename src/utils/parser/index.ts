@@ -1,8 +1,6 @@
 const checkAbbreviation = {
-  isIdentifiersList: (abbreviation: string): boolean =>
-    /^[/\w]+:.*[^:]$/.test(abbreviation),
-  isObjectPattern: (abbreviation: string): boolean =>
-    /^[/\w]+:.*:$/.test(abbreviation),
+  isIdentifiersList: (abbreviation: string): boolean => /^[/\w]+:.*[^:]$/.test(abbreviation),
+  isObjectPattern: (abbreviation: string): boolean => /^[/\w]+:.*:$/.test(abbreviation),
   isAsync: (abbreviation: string): boolean => /^a\/.*/.test(abbreviation),
 };
 
@@ -26,13 +24,13 @@ export const parseImportAbbreviation = (
   let objectProperties;
   if (customName && customName.indexOf(':') !== -1) {
     const [defaultName, objProps] = customName.split(':');
-    objectProperties = parseObjectDestructuringProps(objProps)
+    objectProperties = parseObjectDestructuringProps(objProps);
     customName = defaultName;
-  } 
+  }
   if (flag === ':') {
     objectProperties = parseObjectDestructuringProps(nodesArray.pop());
   }
-  
+
   const alias = flag === '*' ? nodesArray.pop() : undefined;
 
   return { name, customName, objectProperties, alias };
@@ -45,6 +43,7 @@ export const parseFunctionAbbreviation = (
   async: boolean;
   functionParams: FunctionParams;
 } => {
+  // eslint-disable-next-line prefer-const
   let [name, paramsStr] = nodesString.split(':');
   const async = checkAbbreviation.isAsync(nodesString);
   const list = parseObjectDestructuringProps(paramsStr);

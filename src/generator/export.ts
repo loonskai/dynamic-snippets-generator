@@ -17,14 +17,9 @@ const _export = (rawCodeStr: string): string => {
     ExportNamedDeclaration(path) {
       const { declarations } = path.node.declaration as any;
       const { name: initName } = declarations[0].id;
-      const newId = generateNode.identifier(
-        getNamedPlaceholder(counter.value, initName),
-      );
+      const newId = generateNode.identifier(getNamedPlaceholder(counter.value, initName));
       const newInit = generateNode.identifier(getPlaceholder(counter.value));
-      path.set(
-        'declaration',
-        generateNode.constVariableDeclaration(newId, newInit) as any,
-      );
+      path.set('declaration', generateNode.constVariableDeclaration(newId, newInit) as any);
       counter.reset();
       removeSemicolons = true;
     },
@@ -32,30 +27,18 @@ const _export = (rawCodeStr: string): string => {
       removeSemicolons = false;
       const { declaration } = path.node;
       const { name: initName } = declaration as any;
-      path.set(
-        'declaration',
-        generateNode.identifier(
-          getNamedPlaceholder(counter.value, initName),
-        ) as any,
-      );
+      path.set('declaration', generateNode.identifier(getNamedPlaceholder(counter.value, initName)) as any);
       counter.reset();
     },
     AssignmentExpression(path) {
       removeSemicolons = false;
       const { name: initName } = path.node.right as any;
-      path.set(
-        'right',
-        generateNode.identifier(
-          getNamedPlaceholder(counter.value, initName),
-        ) as any,
-      );
+      path.set('right', generateNode.identifier(getNamedPlaceholder(counter.value, initName)) as any);
       counter.reset();
     },
   });
 
-  return removeSemicolons
-    ? generate(ast, (code: string) => code.replace(';', ''))
-    : generate(ast);
+  return removeSemicolons ? generate(ast, (code: string) => code.replace(';', '')) : generate(ast);
 };
 
 export default _export;

@@ -3,11 +3,7 @@ import * as t from 'babel-types';
 import * as parser from '@babel/parser';
 
 import generate from '../utils/generate';
-import {
-  getPlaceholder,
-  getNamedPlaceholder,
-  isPlaceholder,
-} from '../utils/generator';
+import { getPlaceholder, getNamedPlaceholder, isPlaceholder } from '../utils/generator';
 import * as generateNode from '../utils/generator/generateNode';
 import Counter from '../utils/generator/counter';
 

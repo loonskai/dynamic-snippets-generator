@@ -14,15 +14,11 @@ describe('import statement', () => {
   });
 
   it('import with no destructured properties', () => {
-    expect(generate.import("import {} from 'packageName';")).toEqual(
-      "import { $1 } from '${2:packageName}';",
-    );
+    expect(generate.import("import {} from 'packageName';")).toEqual("import { $1 } from '${2:packageName}';");
   });
 
   it('import with 1 object property', () => {
-    expect(generate.import("import { a } from 'packageName';")).toEqual(
-      "import { ${1:a} } from '${2:packageName}';",
-    );
+    expect(generate.import("import { a } from 'packageName';")).toEqual("import { ${1:a} } from '${2:packageName}';");
   });
 
   it('import with 2 object properties', () => {
