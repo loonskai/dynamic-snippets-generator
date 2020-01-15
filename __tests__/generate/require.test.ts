@@ -14,9 +14,7 @@ describe('require statement', () => {
   });
 
   it('require with no object properties', () => {
-    expect(generate.require("const {} = require('package');")).toEqual(
-      "const { $1 } = require('${2:package}');",
-    );
+    expect(generate.require("const {} = require('package');")).toEqual("const { $1 } = require('${2:package}');");
   });
 
   it('require with 1 object property', () => {

@@ -4,13 +4,13 @@ module.exports = function(wallaby) {
     tests: ['__tests__/*.test.ts'],
     env: {
       type: 'node',
-      runner: 'node'
+      runner: 'node',
     },
     compilers: {
       '**/*.ts': wallaby.compilers.typeScript({
-        module: 'commonjs'
-      })
+        module: 'commonjs',
+      }),
     },
-    testFramework: 'jest'
+    testFramework: 'jest',
   };
 };

@@ -2,12 +2,8 @@ import NodeTypes from '../constants/nodeTypes';
 import { parseImportAbbreviation } from '../utils/parser';
 import * as getASTNode from '../utils/parser/getASTNode';
 
-const parseRequire = (
-  abbreviationNodes: string,
-): VariableDeclaration<CallExpression> => {
-  const { name, customName, objectProperties } = parseImportAbbreviation(
-    abbreviationNodes,
-  );
+const parseRequire = (abbreviationNodes: string): VariableDeclaration<CallExpression> => {
+  const { name, customName, objectProperties } = parseImportAbbreviation(abbreviationNodes);
 
   const declaratorID: Identifier | ObjectPattern = objectProperties
     ? getASTNode.objectPattern(objectProperties)

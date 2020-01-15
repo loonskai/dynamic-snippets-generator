@@ -2,16 +2,17 @@ import NodeTypes from '../constants/nodeTypes';
 import { parseFunctionAbbreviation } from '../utils/parser';
 import * as getASTNode from '../utils/parser/getASTNode';
 
-const parseArrowFunctionExpression = (
-  abbreviationNodes: string,
-): VariableDeclaration<ArrowFunctionExpression> => {
-  const { name, async, functionParams } = parseFunctionAbbreviation(
-    abbreviationNodes.replace('=>', ''),
-  );
+const parseArrowFunctionExpression = (abbreviationNodes: string): VariableDeclaration<ArrowFunctionExpression> => {
+  const [declaration, body] = abbreviationNodes.split('=>');
+  const { name, async, functionParams } = parseFunctionAbbreviation(declaration);
+
+  const bodyNodes = [];
+  if (body) {
+    bodyNodes.push(getASTNode.returnStatement(null));
+  }
+
   const { isObjectPattern, list } = functionParams;
-  const params = isObjectPattern
-    ? [getASTNode.objectPattern(list)]
-    : list.map(getASTNode.identifier);
+  const params = isObjectPattern ? [getASTNode.objectPattern(list)] : list.map(getASTNode.identifier);
 
   return {
     type: NodeTypes.VARIABLE_DECLARATION,
@@ -24,6 +25,7 @@ const parseArrowFunctionExpression = (
           id: getASTNode.identifier(name),
           params,
           async,
+          body: bodyNodes,
         }),
       },
     ],

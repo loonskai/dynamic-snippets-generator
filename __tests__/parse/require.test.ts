@@ -6,9 +6,7 @@ describe('require statement', () => {
   });
 
   it('require with custom name', () => {
-    expect(_require('>customName>package')).toEqual(
-      "const customName = require('package');",
-    );
+    expect(_require('>customName>package')).toEqual("const customName = require('package');");
   });
 
   it('with object desctructuring', () => {
@@ -16,20 +14,14 @@ describe('require statement', () => {
   });
 
   it('with object desctructuring 1 parameter', () => {
-    expect(_require(':obj>package')).toEqual(
-      "const { obj } = require('package');",
-    );
+    expect(_require(':obj>package')).toEqual("const { obj } = require('package');");
   });
 
   it('with object desctructuring 2 parameters', () => {
-    expect(_require(':objA,objB>package')).toEqual(
-      "const { objA, objB } = require('package');",
-    );
+    expect(_require(':objA,objB>package')).toEqual("const { objA, objB } = require('package');");
   });
 
   it('with object desctructuring 3 parameters', () => {
-    expect(_require(':objA,objB,objC>package')).toEqual(
-      "const { objA, objB, objC } = require('package');",
-    );
+    expect(_require(':objA,objB,objC>package')).toEqual("const { objA, objB, objC } = require('package');");
   });
 });

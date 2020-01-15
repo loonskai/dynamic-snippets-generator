@@ -16,25 +16,17 @@ export const importSpecifier = (value: string): ImportSpecifier => {
   return t.importSpecifier(local, imported);
 };
 
-export const importDefaultSpecifier = (
-  value: string,
-): ImportDefaultSpecifier => {
+export const importDefaultSpecifier = (value: string): ImportDefaultSpecifier => {
   const local = identifier(value);
   return t.importDefaultSpecifier(local);
 };
 
-export const importNamespaceSpecifier = (
-  value: string,
-): ImportNamespaceSpecifier => {
+export const importNamespaceSpecifier = (value: string): ImportNamespaceSpecifier => {
   const local = identifier(value);
   return t.importNamespaceSpecifier(local);
 };
 
-export const stringLiteral = (value: string): StringLiteral =>
-  t.stringLiteral(value);
+export const stringLiteral = (value: string): StringLiteral => t.stringLiteral(value);
 
-export const constVariableDeclaration = (
-  id: Identifier,
-  init: Identifier,
-): VariableDeclaration =>
+export const constVariableDeclaration = (id: Identifier, init: Identifier): VariableDeclaration =>
   t.variableDeclaration('const', [t.variableDeclarator(id, init)]);

@@ -2,11 +2,7 @@ import traverse from '@babel/traverse';
 import * as parser from '@babel/parser';
 
 import generate from '../utils/generate';
-import {
-  getPlaceholder,
-  getNamedPlaceholder,
-  isPlaceholder,
-} from '../utils/generator';
+import { getPlaceholder, getNamedPlaceholder, isPlaceholder } from '../utils/generator';
 import * as generateNode from '../utils/generator/generateNode';
 import Counter from '../utils/generator/counter';
 
@@ -21,9 +17,7 @@ const _import = (rawCodeStr: string): string => {
       const { specifiers } = path.node;
       if (specifiers.length > 0) return;
 
-      const defaultSpecifier = generateNode.importSpecifier(
-        getPlaceholder(counter.value),
-      ) as any;
+      const defaultSpecifier = generateNode.importSpecifier(getPlaceholder(counter.value)) as any;
       path.node.specifiers = [defaultSpecifier];
     },
     StringLiteral(path) {
@@ -47,9 +41,7 @@ const _import = (rawCodeStr: string): string => {
       if (isPlaceholder(initialName)) return;
 
       const newName = getNamedPlaceholder(counter.value, initialName);
-      const newImportDefaultSpecifier = generateNode.importDefaultSpecifier(
-        newName,
-      );
+      const newImportDefaultSpecifier = generateNode.importDefaultSpecifier(newName);
       path.replaceWith(newImportDefaultSpecifier as any);
     },
     ImportNamespaceSpecifier(path) {
@@ -57,9 +49,7 @@ const _import = (rawCodeStr: string): string => {
       if (isPlaceholder(initialName)) return;
 
       const newName = getNamedPlaceholder(counter.value, initialName);
-      const newImportNamespaceSpecifier = generateNode.importNamespaceSpecifier(
-        newName,
-      );
+      const newImportNamespaceSpecifier = generateNode.importNamespaceSpecifier(newName);
       path.replaceWith(newImportNamespaceSpecifier as any);
     },
   });

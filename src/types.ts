@@ -47,9 +47,7 @@ interface CallExpression {
 
 interface ImportDeclaration {
   type: 'ImportDeclaration';
-  specifiers: Array<
-    ImportDefaultSpecifier | ImportSpecifier | ImportNamespaceSpecifier
-  >;
+  specifiers: Array<ImportDefaultSpecifier | ImportSpecifier | ImportNamespaceSpecifier>;
   source: StringLiteral;
 }
 
@@ -117,10 +115,16 @@ interface MemberExpression {
   property: Identifier;
 }
 
+interface ReturnStatement {
+  type: 'ReturnStatement';
+  argument: any;
+}
+
 type AnyNode =
   | VariableDeclaration<any>
   | ImportDeclaration
   | FunctionDeclaration
   | ExpressionStatement<any>
   | ExportNamedDeclaration
-  | ExportDefaultDeclaration;
+  | ExportDefaultDeclaration
+  | ReturnStatement;

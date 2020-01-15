@@ -10,10 +10,7 @@ interface Options {
 const parseExport = (
   abbreviationNodes: string,
   options: Options,
-):
-  | ExportNamedDeclaration
-  | ExportDefaultDeclaration
-  | ExpressionStatement<AssignmentExpression> => {
+): ExportNamedDeclaration | ExportDefaultDeclaration | ExpressionStatement<AssignmentExpression> => {
   const { es6, isDefault } = options;
   const { name } = parseExportAbbreviation(abbreviationNodes);
   if (!es6)
