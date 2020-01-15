@@ -41,7 +41,7 @@ export const importNamespaceSpecifier = (
   local: identifier(alias),
 });
 
-export const blockStatement = (body: Array<any>): BlockStatement => ({
+export const blockStatement = (body?: Array<any>): BlockStatement => ({
   type: NodeTypes.BLOCK_STATEMENT,
   body: body || [],
 });

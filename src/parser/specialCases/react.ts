@@ -42,7 +42,14 @@ const parseReact = (
     const importStatement = parseES6Import(`>React:${mapReactImports(reactImportsStr)}>react`);
     const exportStatement = parseExport(`>${componentName}`, { es6: true, isDefault: true });
     const component = parseArrowFunctionExpression(`${componentName}:${propsStr}:=>body`);
-    return component;
+    return {
+      type: 'Program',
+      body: [
+        importStatement,
+        component,
+        exportStatement
+      ]
+    }
   }
 
   if (nodes.length === 3) {

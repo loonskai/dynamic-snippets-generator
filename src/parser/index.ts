@@ -34,8 +34,8 @@ export const _react = (abbreviation: string) => {
   const ast = parseReact(abbreviation);
   const result = generate(ast);
   console.log(ast)
-  console.log(result)
-  return parseReact(abbreviation)
+  console.log(parse(abbreviation, parseReact))
+  return parse(abbreviation, parseReact)
 } 
 
 // export const _react = (abbreviation: string) => parse(abbreviation, parseReact);
