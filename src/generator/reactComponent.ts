@@ -1,53 +1,47 @@
 import traverse from '@babel/traverse';
 import * as parser from '@babel/parser';
+import * as t from 'babel-types';
+
+import generate from '../utils/generate';
+import Counter from '../utils/generator/counter';
+import * as generateNode from '../utils/generator/generateNode';
 
 const _reactComponent = (rawCodeStr: string): any => {
-/* 
-export default function(babel) {
-  const { types: t } = babel;
-  let count = 1;
-  let defaultCount = null;
+  const ast = parser.parse(rawCodeStr, { sourceType: 'module' });
   
-  const updateName = (node, { ref, defaultCount } = {}) => {
+  const counter = new Counter();
+  const updateName = (node: any, { ref, customCounterValue }: {
+    ref: string;
+    customCounterValue?: number;
+  }): any => {
   	const { name } = node[ref];    
-    return t.identifier(`\${${defaultCount || count++}:${name}}`)
+    return t.identifier(`\${${customCounterValue || counter.value}:${name}}`)
   }
 
-  return {
-    name: "ast-transform", // not required
-    visitor: {
-      	ImportSpecifier(path) {
-          const { name } = path.node.imported;
-          if (name[0] === '$') return;
-
-          const updatedName = updateName(path.node, { ref: 'imported' });
-          const newSpecifier = t.importSpecifier(updatedName, updatedName);
-          path.replaceWith(newSpecifier);
-        },
-    	VariableDeclarator(path) { 
-            defaultCount = count;
-          	path.set('id', updateName(path.node, { ref: 'id' }));
-        },
-      	ExportDefaultDeclaration(path) {
-            path.set('declaration', updateName(path.node, { ref: 'declaration', defaultCount }));
-        },
-      	ObjectPattern(path) {
-        	// Props destructure
-          const { properties } = path.node;
-          const updatedProps = properties.map(prop => {
-            const updatedName = updateName(prop, { ref: 'key' });
-            const newProp = t.objectProperty(updatedName, updatedName, false, true)
-          	return newProp;
-          });
-          path.set('properties', updatedProps);
-        },
-      	JSXElement(path) {
-        	path.node.children.push(t.jsxText(`\$${count++}`));
-        }
+  traverse(ast, {
+    VariableDeclarator(path) {
+      const customCounterValue = counter.value;
+      path.set('id', updateName(path.node, { ref: 'id', customCounterValue  }));
+      const programStatement =  path.getStatementParent().getStatementParent() as any;
+      const ExportDefaultDeclaration = programStatement.getNextSibling();
+      ExportDefaultDeclaration.set('declaration', updateName(ExportDefaultDeclaration.node, { ref: 'declaration', customCounterValue  }));
+    },
+    ObjectPattern(path) {
+      const { properties } = path.node;
+      const updatedProps = properties.map(prop => {
+        const updatedName = updateName(prop, { ref: 'key' });
+        const newProp = t.objectProperty(updatedName, updatedName, false, true)
+        return newProp;
+      }) as any;
+      path.set('properties', updatedProps);
+    },
+    ReturnStatement(path) {
+      path.set('argument', generateNode.identifier(`\$${counter.value}`) as any);
     }
-  };
-}
-*/
+  });
+
+  const result = generate(ast);
+  return result;
 };
 
 export default _reactComponent;
