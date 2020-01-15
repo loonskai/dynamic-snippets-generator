@@ -1,22 +1,8 @@
-// import NodeTypes from '../constants/nodeTypes';
-// import { parseFunctionAbbreviation } from '../utils/parser';
-import * as getASTNode from '../../utils/parser/getASTNode';
-
 import parseES6Import from '../import';
 import parseExport from '../export';
 import parseArrowFunctionExpression from '../arrowFunctionExpression';
 
-
-import { parseImportAbbreviation } from '../../utils/parser';
-
-interface Options {
-  isFunctional: boolean;
-}
-
-// const parseReactComponent = (abbreviationNodes: string,
-//   options: Options) => {
-
-// }
+const DEFAULT_COMPONENT_NAME = 'ComponentName';
 
 const getReactImport = (cut: string): string => {
   const str = cut[0] !== ':' ? cut : cut.replace(':', '');
@@ -53,15 +39,75 @@ const parseReact = (
   }
 
   if (nodes.length === 3) {
-    // TODO: Check which elements are included
+    const reS = {
+      importsAndProps: />.*:/g,
+      importsAndName: />.*@/g,
+      propsAndName: /:.*@/g
+    };
+    let importStatement = parseES6Import(`>React>react`);;
+    let component = parseArrowFunctionExpression(`${DEFAULT_COMPONENT_NAME}=>body`);
+    let exportStatement = parseExport(`>${DEFAULT_COMPONENT_NAME}`, { es6: true, isDefault: true });
+
+    if (reS.importsAndProps.test(abbreviationNodes)) {
+      const [, reactImportsStr, propsStr] = nodes;
+      importStatement = parseES6Import(`>React:${mapReactImports(reactImportsStr)}>react`);
+      component = parseArrowFunctionExpression(`${DEFAULT_COMPONENT_NAME}:${propsStr}:=>body`);
+    }
+
+    if (reS.importsAndName.test(abbreviationNodes)) {
+      const [, reactImportsStr, componentName] = nodes;
+      importStatement = parseES6Import(`>React:${mapReactImports(reactImportsStr)}>react`);
+      component = parseArrowFunctionExpression(`${componentName}=>body`);
+      exportStatement = parseExport(`>${componentName}`, { es6: true, isDefault: true });
+    }
+
+    if (reS.propsAndName.test(abbreviationNodes)) {
+      const [, propsStr, componentName] = nodes;
+      component = parseArrowFunctionExpression(`${componentName}:${propsStr}:=>body`);
+      exportStatement = parseExport(`>${componentName}`, { es6: true, isDefault: true });
+    }
+
+    return {
+      type: 'Program',
+      body: [
+        importStatement,
+        component,
+        exportStatement
+      ]
+    }
   }
 
   if (nodes.length === 2) {
-    // TODO: Check which elements are included
+    let importStatement = parseES6Import(`>React>react`);;
+    let component = parseArrowFunctionExpression(`${DEFAULT_COMPONENT_NAME}=>body`);
+    let exportStatement = parseExport(`>${DEFAULT_COMPONENT_NAME}`, { es6: true, isDefault: true });
+    switch (abbreviationNodes[0]) {
+      case '>': {
+        const [, reactImportsStr] = nodes;
+        importStatement = parseES6Import(`>React:${mapReactImports(reactImportsStr)}>react`);
+        break;
+      };
+      case ':': {
+        const [, propsStr] = nodes;
+        component = parseArrowFunctionExpression(`${DEFAULT_COMPONENT_NAME}:${propsStr}:=>body`);
+        break;
+      };
+      case '@': {
+        const [, componentName] = nodes;
+        component = parseArrowFunctionExpression(`${componentName}=>body`);
+        break;
+      };
+    }
 
+    return {
+      type: 'Program',
+      body: [
+        importStatement,
+        component,
+        exportStatement
+      ]
+    }
   }
-
-  return nodes;
 };
 
 export default parseReact;

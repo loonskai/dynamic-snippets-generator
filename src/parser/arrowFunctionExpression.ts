@@ -12,7 +12,6 @@ const parseArrowFunctionExpression = (
   if (body) {
     bodyNodes.push(getASTNode.returnStatement(null));
   }
-  console.log(bodyNodes)
 
   const { isObjectPattern, list } = functionParams;
   const params = isObjectPattern
