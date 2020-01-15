@@ -3,6 +3,7 @@ import _import from './import';
 import _functionDeclaration from './functionDeclaration';
 import _arrowFunctionExpression from './arrowFunctionExpression';
 import _export from './export';
+import _reactComponent from './reactComponent';
 
 export default {
   require: _require,
@@ -10,4 +11,5 @@ export default {
   functionDeclaration: _functionDeclaration,
   arrowFunctionExpression: _arrowFunctionExpression,
   export: _export,
+  reactComponent: _reactComponent,
 };

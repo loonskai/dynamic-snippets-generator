@@ -5,6 +5,7 @@ enum AbbreviationIDs {
   EX = 'e',
   EXD = 'ed',
   MEXP = 'me',
+  REACT = 'R',
 }
 
 export default AbbreviationIDs;

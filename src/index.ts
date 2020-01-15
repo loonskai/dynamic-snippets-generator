@@ -29,6 +29,8 @@ export default (abbreviation: string): string => {
       return generate.export(parse._exportDefault(abbreviationNodes));
     case abbreviationIDs.MEXP:
       return generate.export(parse._moduleExports(abbreviationNodes));
+    case abbreviationIDs.REACT:
+      return generate.reactComponent(parse._react(abbreviationNodes))
     default:
       return abbreviation;
   }
