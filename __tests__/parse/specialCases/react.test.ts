@@ -6,7 +6,7 @@ describe('react components with named imports', () => {
   });
 
   it('>uS:ue', () => {
-    expect(_react('>uS:ue')).toEqual('bla');
+    expect(_react('>uS,ue')).toEqual('bla');
   });
 
   it('>us,ue:title', () => {
