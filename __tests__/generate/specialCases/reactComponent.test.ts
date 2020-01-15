@@ -10,9 +10,9 @@ describe('react component snippets', () => {
     expect(generate.reactComponent(component)).toEqual(
       getFixture({
         imp: "import React from 'react';",
-        component: "const ${1:ComponentName} = () => {return $2;};",
+        component: "const ${1:ComponentName} = () => {\n  return $2;\n};",
         exp: "export default ${1:ComponentName};"
-      })
+      }, '\n\n')
     );
   });
 
@@ -25,9 +25,9 @@ describe('react component snippets', () => {
       expect(generate.reactComponent(component)).toEqual(
         getFixture({
           imp: "import React, { useState } from 'react';",
-          component: "const ${1:ComponentName} = () => {return $2;};",
+          component: "const ${1:ComponentName} = () => {\n  return $2;\n};",
           exp: "export default ${1:ComponentName};"
-        })
+        }, '\n\n')
       );
     });
 
@@ -39,9 +39,9 @@ describe('react component snippets', () => {
       expect(generate.reactComponent(component)).toEqual(
         getFixture({
           imp: "import React, { useState, useReducer } from 'react';",
-          component: "const ${1:ComponentName} = () => {return $2;};",
+          component: "const ${1:ComponentName} = () => {\n  return $2;\n};",
           exp: "export default ${1:ComponentName};"
-        })
+        }, '\n\n')
       );
     });
   });
@@ -55,9 +55,9 @@ describe('react component snippets', () => {
       expect(generate.reactComponent(component)).toEqual(
         getFixture({
           imp: "import React from 'react';",
-          component: "const ${1:ComponentName} = ({ ${2:title} }) => {return $3;};",
+          component: "const ${1:ComponentName} = ({\n  ${2:title}\n}) => {\n  return $3;\n};",
           exp: "export default ${1:ComponentName};"
-        })
+        }, '\n\n')
       );
     });
   
@@ -69,9 +69,9 @@ describe('react component snippets', () => {
       expect(generate.reactComponent(component)).toEqual(
         getFixture({
           imp: "import React from 'react';",
-          component: "const ${1:ComponentName} = ({ ${2:title}, ${3:handleChange} }) => {return $4;};",
+          component: "const ${1:ComponentName} = ({\n  ${2:title},\n  ${3:handleChange}\n}) => {\n  return $4;\n};",
           exp: "export default ${1:ComponentName};"
-        })
+        }, '\n\n')
       );
     });
   
@@ -84,9 +84,9 @@ describe('react component snippets', () => {
       expect(generate.reactComponent(component)).toEqual(
         getFixture({
           imp: "import React, { useState } from 'react';",
-          component: "const ${1:ComponentName} = ({ ${2:title}, ${3:handleChange} }) => {return $4;};",
+          component: "const ${1:ComponentName} = ({\n  ${2:title},\n  ${3:handleChange}\n}) => {\n  return $4;\n};",
           exp: "export default ${1:ComponentName};"
-        })
+        }, '\n\n')
       );
     });
   });
@@ -101,9 +101,9 @@ describe('react component snippets', () => {
       expect(generate.reactComponent(component)).toEqual(
         getFixture({
           imp: "import React from 'react';",
-          component: "const ${1:MyComponent} = () => {return $2;};",
+          component: "const ${1:MyComponent} = () => {\n  return $2;\n};",
           exp: "export default ${1:MyComponent};"
-        })
+        }, '\n\n')
       );
     });
 
@@ -117,9 +117,9 @@ describe('react component snippets', () => {
       expect(generate.reactComponent(component)).toEqual(
         getFixture({
           imp: "import React, { useEffect, useReducer } from 'react';",
-          component: "const ${1:MyComponent} = () => {return $2;};",
+          component: "const ${1:MyComponent} = () => {\n  return $2;\n};",
           exp: "export default ${1:MyComponent};"
-        })
+        }, '\n\n')
       );
     });
 
@@ -132,9 +132,9 @@ describe('react component snippets', () => {
       expect(generate.reactComponent(component)).toEqual(
         getFixture({
           imp: "import React from 'react';",
-          component: "const ${1:MyComponent} = ({ ${2:title} }) => {return $3;};",
+          component: "const ${1:MyComponent} = ({\n  ${2:title}\n}) => {\n  return $3;\n};",
           exp: "export default ${1:MyComponent};"
-        })
+        }, '\n\n')
       );
     });
 
@@ -147,9 +147,9 @@ describe('react component snippets', () => {
       expect(generate.reactComponent(component)).toEqual(
         getFixture({
           imp: "import React from 'react';",
-          component: "const ${1:MyComponent} = ({ ${2:title}, ${3:handleChange} }) => {return $4;};",
+          component: "const ${1:MyComponent} = ({\n  ${2:title},\n  ${3:handleChange}\n}) => {\n  return $4;\n};",
           exp: "export default ${1:MyComponent};"
-        })
+        }, '\n\n')
       );
     });
 
@@ -163,9 +163,9 @@ describe('react component snippets', () => {
       expect(generate.reactComponent(component)).toEqual(
         getFixture({
           imp: "import React, { useEffect, useReducer } from 'react';",
-          component: "const ${1:MyComponent} = ({ ${2:title}, ${3:handleChange} }) => {return $4;};",
+          component: "const ${1:MyComponent} = ({\n  ${2:title},\n  ${3:handleChange}\n}) => {\n  return $4;\n};",
           exp: "export default ${1:MyComponent};"
-        })
+        }, '\n\n')
       );
     });
   });

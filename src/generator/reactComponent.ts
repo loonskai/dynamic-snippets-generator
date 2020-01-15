@@ -40,8 +40,7 @@ const _reactComponent = (rawCodeStr: string): any => {
     }
   });
 
-  const result = generate(ast);
-  return result;
+  return generate(ast, null, { retainLines: false });
 };
 
 export default _reactComponent;
