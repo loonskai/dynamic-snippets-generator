@@ -41,26 +41,35 @@ export const importNamespaceSpecifier = (
   local: identifier(alias),
 });
 
-export const blockStatement = (): BlockStatement => ({
+export const blockStatement = (body: Array<any>): BlockStatement => ({
   type: NodeTypes.BLOCK_STATEMENT,
-  body: [],
+  body: body || [],
 });
 
 export const arrowFunctionExpression = ({
   id,
   params,
   async,
+  body,
 }: {
   id: Identifier | null;
   params: Array<ObjectPattern | Identifier>;
   async: boolean;
-}): ArrowFunctionExpression => ({
-  type: NodeTypes.ARROW_FUNCTION_EXPRESSION,
-  id,
-  params,
-  async,
-  body: blockStatement(),
-});
+  body?: Array<AnyNode>
+}): ArrowFunctionExpression => {
+  const result = {
+    type: NodeTypes.ARROW_FUNCTION_EXPRESSION,
+    id,
+    params,
+    async,
+  } as ArrowFunctionExpression;
+  if (body) {
+    result.body = blockStatement(body);
+  }
+
+  return result;
+} 
+
 
 export const assignmentExpression = ({
   left,
@@ -88,4 +97,9 @@ export const memberExpression = ({
   object: identifier(object),
   property: identifier(property),
   computed,
+});
+
+export const returnStatement = (argument: any): ReturnStatement => ({
+  type: NodeTypes.RETURN_STATEMENT,
+  argument: argument
 });

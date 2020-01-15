@@ -30,5 +30,12 @@ export const _moduleExports = (abbreviation: string) =>
   parse(abbreviation, parseExport, { isDefault: true, es6: false });
 
   /* Special cases */
-export const _react = (abbreviation: string) => parseReact(abbreviation)
+export const _react = (abbreviation: string) => {
+  const ast = parseReact(abbreviation);
+  const result = generate(ast);
+  console.log(ast)
+  console.log(result)
+  return parseReact(abbreviation)
+} 
+
 // export const _react = (abbreviation: string) => parse(abbreviation, parseReact);

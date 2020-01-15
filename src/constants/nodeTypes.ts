@@ -18,6 +18,7 @@ enum NodeTypes {
   EXPORT_DEFAULT_DECLARATION = 'ExportDefaultDeclaration',
   ASSIGNMENT_EXPRESSION = 'AssignmentExpression',
   MEMBER_EXPRESSION = 'MemberExpression',
+  RETURN_STATEMENT = 'ReturnStatement',
 }
 
 export default NodeTypes;

@@ -5,9 +5,15 @@ import * as getASTNode from '../utils/parser/getASTNode';
 const parseArrowFunctionExpression = (
   abbreviationNodes: string,
 ): VariableDeclaration<ArrowFunctionExpression> => {
-  const { name, async, functionParams } = parseFunctionAbbreviation(
-    abbreviationNodes.replace('=>', ''),
-  );
+  const [ declaration, body ] = abbreviationNodes.split('=>');
+  const { name, async, functionParams } = parseFunctionAbbreviation(declaration);
+
+  const bodyNodes = [];  
+  if (body) {
+    bodyNodes.push(getASTNode.returnStatement(null));
+  }
+  console.log(bodyNodes)
+
   const { isObjectPattern, list } = functionParams;
   const params = isObjectPattern
     ? [getASTNode.objectPattern(list)]
@@ -24,6 +30,7 @@ const parseArrowFunctionExpression = (
           id: getASTNode.identifier(name),
           params,
           async,
+          body: bodyNodes,
         }),
       },
     ],

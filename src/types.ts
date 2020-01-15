@@ -117,10 +117,16 @@ interface MemberExpression {
   property: Identifier;
 }
 
+interface ReturnStatement {
+  type: 'ReturnStatement';
+  argument: any;
+}
+
 type AnyNode =
   | VariableDeclaration<any>
   | ImportDeclaration
   | FunctionDeclaration
   | ExpressionStatement<any>
   | ExportNamedDeclaration
-  | ExportDefaultDeclaration;
+  | ExportDefaultDeclaration
+  | ReturnStatement;
